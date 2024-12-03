@@ -3,7 +3,6 @@
 	import { fadeScale, isEmpty } from '$lib/utils/helpers';
 	import { user, usersettings, isLanding } from '$lib/utils/store';
 	import { goto } from '$app/navigation';
-	import { Button } from '@michaelcuneo/svelte-components';
 
 	let open: boolean = $state(false);
 
