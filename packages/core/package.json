@@ -1,0 +1,21 @@
+{
+  "name": "@fastlab-regain-2024/core",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "sst bind vitest",
+    "typecheck": "tsc -noEmit"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-dynamodb": "^3.699.0",
+    "@aws-sdk/lib-dynamodb": "^3.699.0",
+    "@types/node": "^22.10.1",
+    "@types/nodemailer": "^6.4.17",
+    "nodemailer": "^6.9.16",
+    "sst": "^2.40.6",
+    "vitest": "^2.1.7"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}
