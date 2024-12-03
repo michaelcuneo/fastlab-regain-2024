@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { isEmpty } from '$lib/helpers/aws';
-	import { messages } from '$lib/helpers/store';
+	import { isEmpty } from '$lib/utils/helpers';
+	import { messages } from '$lib/utils/store';
 
 	const dispatch = createEventDispatcher();
 

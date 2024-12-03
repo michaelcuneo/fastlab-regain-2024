@@ -10,7 +10,7 @@ export function AuthStack({ stack }: StackContext) {
   const auth = new Auth(stack, "Auth", {
     authenticator: {
       bind: [jwtSecret],
-      handler: "packages/functions/authenticator.handler",
+      handler: "packages/functions/src/authenticator.handler",
     },
   });
 

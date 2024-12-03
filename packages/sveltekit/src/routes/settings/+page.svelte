@@ -1,8 +1,8 @@
 <script lang="ts">
 	import HumanSelector from '$lib/components/HumanSelector.svelte';
 	import { onMount } from 'svelte';
-	import { modifyUserAreas, downloadUser, setupUserExercises } from '$lib/helpers/aws';
-	import { user, usersettings, exercises, isLanding, activeAreas } from '$lib/helpers/store';
+	import { modifyUserAreas, downloadUser, setupUserExercises } from '$lib/utils/setup';
+	import { user, usersettings, exercises, isLanding, activeAreas } from '$lib/utils/store';
 	import { goto } from '$app/navigation';
 
 	let disabled = $state();

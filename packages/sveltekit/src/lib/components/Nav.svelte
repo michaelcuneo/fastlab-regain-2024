@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { cubicInOut } from 'svelte/easing';
-	import fadeScale from '$lib/helpers/svelte-transitions-fade-scale';
-	import { isEmpty } from '$lib/helpers/aws';
-	import { user, usersettings, isLanding } from '$lib/helpers/store';
+	import { fadeScale, isEmpty } from '$lib/utils/helpers';
+	import { user, usersettings, isLanding } from '$lib/utils/store';
 	import { goto } from '$app/navigation';
 	import { Button } from '@michaelcuneo/svelte-components';
 

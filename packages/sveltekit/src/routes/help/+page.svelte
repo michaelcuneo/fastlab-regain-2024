@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
-	import { addMessage, editMessage, removeMessage, isEmpty } from '$lib/helpers/aws';
+	import { addMessage, editMessage, removeMessage, isEmpty } from '$lib/utils/setup';
 
-	import { user, allUsers, helpMessages, usersettings } from '$lib/helpers/store';
+	import { user, allUsers, helpMessages, usersettings } from '$lib/utils/store';
 
 	let usersArray = allUsers.value;
 	let author: string;

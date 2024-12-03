@@ -4,7 +4,6 @@ import { fromEmail } from "@fastlab-regain-2024/core/user";
 import { mailer } from "@fastlab-regain-2024/core/nodemailer";
 import jwt from "jsonwebtoken";
 
-/*
 declare module "sst/node/auth" {
   export interface SessionTypes {
     user: {
@@ -12,7 +11,6 @@ declare module "sst/node/auth" {
     };
   }
 }
-*/
 
 export type User = {
   id: string;
@@ -52,7 +50,7 @@ export const handler = AuthHandler({
           statusCode: 302,
           headers: {
             Location: process.env.IS_LOCAL
-              ? `http://192.168.0.10:3000/auth/callback?token=${token}`
+              ? `http://localhost:3000/auth/callback?token=${token}`
               : `https://fastlab.soci.org.au/auth/callback?token=${token}`,
           },
           body: JSON.stringify({

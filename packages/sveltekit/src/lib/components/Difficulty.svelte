@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { difficult } from '$lib/helpers/store';
+	import { difficult } from '$lib/utils/store';
 
 	const handleDifficult = (difficulty: number) => {
 		console.log(difficulty, video);

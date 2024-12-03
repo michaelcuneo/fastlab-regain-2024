@@ -3,7 +3,7 @@
 	import Nav from '$lib/components/Nav.svelte';
 	import './reset.css';
 	import './styles.css';
-	import { isLanding } from '$lib/helpers/store';
+	import { isLanding } from '$lib/utils/store';
 
 	let { children }: { children: any } = $props();
 </script>

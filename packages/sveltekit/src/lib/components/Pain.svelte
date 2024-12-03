@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { pain } from "$lib/helpers/store";
+  import { pain } from "$lib/utils/store";
 
   const handlePain = (pains: number) => {
     console.log(pains, video);

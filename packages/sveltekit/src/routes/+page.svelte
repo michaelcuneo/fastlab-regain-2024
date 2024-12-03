@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Landing from '$lib/components/Landing.svelte';
 	import Welcome from '$lib/components/Welcome.svelte';
-	import { isLanding } from '$lib/helpers/store';
+	import { isLanding } from '$lib/utils/store';
 </script>
 
 <svelte:head>

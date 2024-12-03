@@ -3,8 +3,8 @@
 	import Fastlab from '$lib/images/Fastlab_LLR.svg';
 	import { Button } from '@michaelcuneo/svelte-components';
 	import { goto } from '$app/navigation';
-	import { user } from '$lib/helpers/store';
-	import { isEmpty } from '$lib/helpers/aws';
+	import { user } from '$lib/utils/store';
+	import { isEmpty } from '$lib/utils/helpers';
 </script>
 
 <div class="welcome">

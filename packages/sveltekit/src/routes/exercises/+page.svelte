@@ -17,7 +17,7 @@
 		difficult,
 		isHalfway,
 		isCompleted
-	} from '$lib/helpers/store';
+	} from '$lib/utils/store';
 
 	const downloadUser = () =>
 		(

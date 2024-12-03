@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { cubicInOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
-	import fadeScale from '$lib/helpers/svelte-transitions-fade-scale';
-	import { isLanding } from '$lib/helpers/store';
+	import { fadeScale } from '$lib/utils/helpers';
+	import { isLanding } from '$lib/utils/store';
 
 	let visible: boolean = $state(false);
 

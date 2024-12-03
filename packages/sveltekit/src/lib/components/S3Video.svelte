@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { isPaused, isHalfway, isCompleted } from '$lib/helpers/store';
+	import { isPaused, isHalfway, isCompleted } from '$lib/utils/store';
 
-	import { downloadFile } from '$lib/helpers/aws';
+	import { downloadFile } from '$lib/utils/setup';
 
 	let videoComponent: HTMLVideoElement;
 	let time: number = $state(0);

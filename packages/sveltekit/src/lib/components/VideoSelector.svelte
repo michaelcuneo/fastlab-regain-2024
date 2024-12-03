@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { isEmpty } from '$lib/helpers/aws';
-	import { difficult, pain, userExercises } from '$lib/helpers/store';
-	import { calculateRealTime } from '$lib/helpers/helpers';
+	import { isEmpty } from '$lib/utils/setup';
+	import { difficult, pain, userExercises } from '$lib/utils/store';
+	import { calculateRealTime } from '$lib/utils/helpers';
 	import S3Video from './S3Video.svelte';
 	import S3Image from './S3Image.svelte';
 	import Difficulty from './Difficulty.svelte';
