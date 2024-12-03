@@ -57,28 +57,14 @@
 			<a class="nav" href="/">Home</a>
 			<a class="nav" href="/about">About</a>
 			<a class="nav" href="/help">Help</a>
-			<!--
 			{#if !isEmpty($user)}
 				{#if usersettings.value.onboard === false}
-					<Button color="secondary" onclick={() => goto("/")}>
-						<ButtonLabel>Exercises</ButtonLabel>
-						<Icon class="material-icons">home</Icon>
-					</Button>
-					<Button color="secondary" onclick={() => goto("/progress")}>
-						<ButtonLabel>Progress</ButtonLabel>
-						<Icon class="material-icons">forest</Icon>
-					</Button>
-					<Button color="secondary" onclick={() => goto("/settings")}>
-						<ButtonLabel>Settings</ButtonLabel>
-						<Icon class="material-icons">settings</Icon>
-					</Button>
+					<a class="nav" href="/progress">Progress</a>
+					<a class="nav" href="/exercises">Exercises</a>
+					<a class="nav" href="/settings">Settings</a>
 				{/if}
-				<Button color="secondary" onclick={() => (open = !open)}>
-					<ButtonLabel>Logout</ButtonLabel>
-					<Icon class="material-icons">logout</Icon>
-				</Button>
+				<a class="nav" href="/auth/logout">Logout</a>
 			{/if}
-			-->
 		</p>
 	</nav>
 {/if}
