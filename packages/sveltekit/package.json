@@ -13,7 +13,7 @@
 	},
 	"devDependencies": {
 		"@michaelcuneo/meltui-components": "^0.0.10",
-		"@michaelcuneo/svelte-components": "^0.0.12",
+		"@michaelcuneo/svelte-components": "^0.0.16",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"chart.js": "^4.4.7",

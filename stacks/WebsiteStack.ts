@@ -22,6 +22,7 @@ export function WebsiteStack({ stack }: StackContext) {
   const website = new SvelteKitSite(stack, "Website", {
     bind: [
       auth,
+      api,
       usersTable,
       emailService,
       emailHost,
@@ -32,7 +33,7 @@ export function WebsiteStack({ stack }: StackContext) {
       bucket,
     ],
     path: "packages/sveltekit",
-    edge: true, // Set to false because we don't need this to be international.
+    edge: true, // Set to true because we do need this app to be international to share with Loughborough
     environment: {
       API_URL: api.url,
     },

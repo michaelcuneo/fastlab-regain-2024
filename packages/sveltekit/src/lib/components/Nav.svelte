@@ -15,6 +15,8 @@
 		goto('/');
 	};
 
+	console.log('user', $user);
+
 	$effect(() => {
 		open = true;
 	});
@@ -55,13 +57,11 @@
 		<p>
 			<a class="nav" href="/">Home</a>
 			<a class="nav" href="/about">About</a>
-			<a class="nav" href="/help">Help</a>
+			<!-- <a class="nav" href="/help">Help</a> -->
 			{#if !isEmpty($user)}
-				{#if usersettings.value.onboard === false}
-					<a class="nav" href="/progress">Progress</a>
-					<a class="nav" href="/exercises">Exercises</a>
-					<a class="nav" href="/settings">Settings</a>
-				{/if}
+				<a class="nav" href="/progress">Progress</a>
+				<a class="nav" href="/exercises">Exercises</a>
+				<a class="nav" href="/settings">Settings</a>
 				<a class="nav" href="/auth/logout">Logout</a>
 			{/if}
 		</p>

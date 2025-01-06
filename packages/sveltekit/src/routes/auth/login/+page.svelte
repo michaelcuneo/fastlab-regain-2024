@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Card } from '@michaelcuneo/svelte-components';
+	import { Button, Card, Loader } from '@michaelcuneo/svelte-components';
 	import { Label } from '@michaelcuneo/meltui-components';
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
@@ -22,7 +22,9 @@
 </script>
 
 {#if submitted && !form?.success}
-	<!-- <CircularProgress style="height: 32px; width: 32px;" indeterminate /> -->
+	<div class="wrapper">
+		<Loader size="64px" />
+	</div>
 {/if}
 {#if !submitted && !form?.success}
 	<div class="wrapper">
@@ -77,6 +79,10 @@
 		display: flex;
 		flex-direction: column;
 		width: 100%;
+	}
+	h3 {
+		line-height: 0.8rem;
+		color: white;
 	}
 	h4 {
 		line-height: 0.4rem;

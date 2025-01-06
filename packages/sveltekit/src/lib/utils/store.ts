@@ -1,8 +1,9 @@
 import { persistedState } from './persistedState.svelte';
 import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
+import type { Writable } from 'svelte/store';
 
-const createStore = <T>(key: string, initialValue: T, storageType: {}) => {
+const createStore = <T>(key: string, initialValue: T, storageType: object) => {
 	let storedValue;
 
 	if (browser) {
@@ -50,22 +51,22 @@ export const activeAreas = createStore(
 	],
 	{ storage: 'session' }
 );
-export const helpMessages = createStore('helpMessages', false, { storage: 'session' });
-export const updateHelpMessages = createStore('updateHelpMessages', false, { storage: 'session' });
-export const isLanding = createStore('isLanding', false, { storage: 'session' });
-export const isPaused = createStore('isPaused', false, { storage: 'session' });
-export const isHalfway = createStore('isHalfway', false, { storage: 'session' });
-export const isCompleted = createStore('isCompleted', false, { storage: 'session' });
-export const pain = createStore('pain', 0, { storage: 'session' });
-export const difficult = createStore('difficult', 0, { storage: 'session' });
-export const user = createStore('user', {}, { storage: 'local' });
-export const usersettings = createStore('usersettings', {}, { storage: 'local' });
-export const allUsers = createStore('allUsers', [], { storage: 'local' });
-export const groups = createStore('groups', [], { storage: 'local' });
-export const exercises = createStore('exercises', [], { storage: 'local' });
-export const error = createStore('error', { status: false, message: '' }, { storage: 'session' });
-export const userExercises = createStore('userExercises', [], { storage: 'local' });
-export const currentMode = createStore('currentMode', 'display', { storage: 'session' });
-export const currentGroup = createStore('currentGroup', {}, { storage: 'session' });
-export const currentExercise = createStore('currentExercise', {}, { storage: 'session' });
-export const version = createStore('version', '1.0.0', { storage: 'session' });
+export const helpMessages: Writable<boolean> = createStore('helpMessages', false, { storage: 'session' });
+export const updateHelpMessages: Writable<boolean> = createStore('updateHelpMessages', false, { storage: 'session' });
+export const isLanding: Writable<boolean> = createStore('isLanding', false, { storage: 'session' });
+export const isPaused: Writable<boolean> = createStore('isPaused', false, { storage: 'session' });
+export const isHalfway: Writable<boolean> = createStore('isHalfway', false, { storage: 'session' });
+export const isCompleted: Writable<boolean> = createStore('isCompleted', false, { storage: 'session' });
+export const pain: Writable<number> = createStore('pain', 0, { storage: 'session' });
+export const difficult: Writable<number> = createStore('difficult', 0, { storage: 'session' });
+export const user: Writable<User> = createStore('user', { id: '', email: '', createdAt: '', updatedAt: '' }, { storage: 'local' });
+export const usersettings: Writable<object> = createStore('usersettings', {}, { storage: 'local' });
+export const allUsers: Writable<[]> = createStore('allUsers', [], { storage: 'local' });
+export const groups: Writable<Group[]> = createStore('groups', [], { storage: 'local' });
+export const exercises: Writable<Exercise[]> = createStore('exercises', [], { storage: 'local' });
+export const error: Writable<{ status: boolean; message: string }> = createStore('error', { status: false, message: '' }, { storage: 'session' });
+export const userExercises: Writable<Exercise[]> = createStore('userExercises', [], { storage: 'local' });
+export const currentMode: Writable<string> = createStore('currentMode', 'display', { storage: 'session' });
+export const currentGroup: Writable<Group> = createStore('currentGroup', { id: '', title: '', users: [], groups: [], createdAt: '', updatedAt: '' }, { storage: 'session' });
+export const currentExercise: Writable<Exercise> = createStore('currentExercise', { id: '', title: '', time: 0, createdAt: '', updatedAt: '' }, { storage: 'session' });
+export const version: Writable<string> = createStore('version', '1.0.0', { storage: 'session' });

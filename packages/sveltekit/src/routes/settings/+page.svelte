@@ -1,7 +1,7 @@
 <script lang="ts">
 	import HumanSelector from '$lib/components/HumanSelector.svelte';
 	import { onMount } from 'svelte';
-	import { modifyUserAreas, downloadUser, setupUserExercises } from '$lib/utils/setup';
+	// import { modifyUserAreas, downloadUser, setupUserExercises } from '$lib/utils/store';
 	import { user, usersettings, exercises, isLanding, activeAreas } from '$lib/utils/store';
 	import { goto } from '$app/navigation';
 

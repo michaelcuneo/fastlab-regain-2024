@@ -22,8 +22,8 @@ export const mailer = async (data: Mailer) => {
   const mailOptions = {
     from: Config.EMAIL_USER,
     to: data.email,
-    subject: `Hello, here is your Login Link for Penny`,
-    html: email(data.authUrl, 'Penny')
+    subject: `Hello, here is your Login Link for FASTlab Regain`,
+    html: email(data.authUrl, 'FASTlab Regain')
   };
 
   return Transporter.sendMail(mailOptions)

@@ -1,6 +1,6 @@
 import { Config } from "sst/node/config";
 import { AuthHandler, LinkAdapter } from "sst/node/auth";
-import { fromEmail } from "@fastlab-regain-2024/core/user";
+import { User } from "@fastlab-regain-2024/core/user";
 import { mailer } from "@fastlab-regain-2024/core/nodemailer";
 import jwt from "jsonwebtoken";
 
@@ -33,7 +33,7 @@ export const handler = AuthHandler({
         };
       },
       onSuccess: async (response) => {
-        const user: User = (await fromEmail(response.email!)) as User;
+        const user: User = (await User.userFromEmail(response.email!)) as User;
 
         if (user === undefined) {
           return {
@@ -42,7 +42,7 @@ export const handler = AuthHandler({
           };
         }
 
-        const token = jwt.sign({ userId: user && user.id }, Config.JWT_SECRET, {
+        const token = jwt.sign({ userId: user && user.id, email: user && user.email }, Config.JWT_SECRET, {
           expiresIn: "1m",
         });
 
@@ -57,6 +57,7 @@ export const handler = AuthHandler({
             type: "user",
             properties: {
               userId: user && user.id,
+              email: user && user.email,
             },
           }),
         };

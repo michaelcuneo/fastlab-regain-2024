@@ -1,8 +1,6 @@
 <script>
 	import UON from '$lib/images/UoN_Black.svg';
 	import Fastlab from '$lib/images/Fastlab_LLR.svg';
-	import { Button } from '@michaelcuneo/svelte-components';
-	import { goto } from '$app/navigation';
 </script>
 
 <div class="welcome">

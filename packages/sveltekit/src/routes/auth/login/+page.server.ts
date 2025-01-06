@@ -7,7 +7,7 @@ export const actions = {
 		const formData = await request.formData();
 		// Get the email from the form data
 		const email = formData.get('email')?.toString();
-		const getUserURL = `${Api.api.url}/user/getUserByEmail/${email}`;
+		const getUserURL = `${Api.regainApi.url}/user/getUserByEmail/${email}`;
 
 		// Fetch the user using the email
 		const userResponse = await fetch(getUserURL);
@@ -20,7 +20,7 @@ export const actions = {
 		} else {
 			// Parse the response to JSON
 			const user = await userResponse.json();
-			const userCreateURL = `${Api.api.url}/user/create`;
+			const userCreateURL = `${Api.regainApi.url}/user/create`;
 
 			// If user does not exist, create the user.
 			if (user === "User doesn't exist") {
@@ -38,7 +38,7 @@ export const actions = {
 				}
 			} else {
 				// Send a POST request to the magic link endpoint
-				const userAuthURL = `${Api.api.url}/auth/magicLink/authorize?email=${email}`;
+				const userAuthURL = `${Api.regainApi.url}/auth/magicLink/authorize?email=${email}`;
 				const magicLinkResponse = await fetch(
 					userAuthURL,
 					{

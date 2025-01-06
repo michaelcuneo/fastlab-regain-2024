@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
-	import { addMessage, editMessage, removeMessage, isEmpty } from '$lib/utils/setup';
+	import { addMessage, editMessage, removeMessage, isEmpty } from '$lib/utils/store';
 
 	import { user, allUsers, helpMessages, usersettings } from '$lib/utils/store';
 
