@@ -4,7 +4,6 @@
 	import { fade, fly } from 'svelte/transition';
 	import Information from '$lib/components/Information.svelte';
 	import VideoSelector from '$lib/components/VideoSelector.svelte';
-	import { API, graphqlOperation } from '@aws-amplify/api';
 	import { getUser } from '../graphql/queries';
 	import {
 		error,

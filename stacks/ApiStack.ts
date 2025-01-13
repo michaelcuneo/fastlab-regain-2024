@@ -15,6 +15,7 @@ export function ApiStack({ stack }: StackContext) {
     imageTable,
     videoTable,
     messageTable,
+    sessionTable,
   } = use(TableStack);
 
   const api = new Api(stack, "regainApi", {
@@ -41,6 +42,7 @@ export function ApiStack({ stack }: StackContext) {
           imageTable,
           videoTable,
           messageTable,
+          sessionTable,
           emailService,
           emailHost,
           emailPort,
@@ -67,10 +69,13 @@ export function ApiStack({ stack }: StackContext) {
       "DELETE /group/delete": "packages/functions/src/group.delete",
       // Group Exercises
       "GET /groupExercise/list": "packages/functions/src/groupExercise.list",
-      "POST /groupExercise/create": "packages/functions/src/groupExercise.create",
+      "POST /groupExercise/create":
+        "packages/functions/src/groupExercise.create",
       "GET /groupExercise/get/{id}": "packages/functions/src/groupExercise.get",
-      "PUT /groupExercise/update": "packages/functions/src/groupExercise.update",
-      "DELETE /groupExercise/delete": "packages/functions/src/groupExercise.delete",
+      "PUT /groupExercise/update":
+        "packages/functions/src/groupExercise.update",
+      "DELETE /groupExercise/delete":
+        "packages/functions/src/groupExercise.delete",
       // Images
       "GET /image/list": "packages/functions/src/image.list",
       "POST /image/create": "packages/functions/src/image.create",
@@ -108,6 +113,12 @@ export function ApiStack({ stack }: StackContext) {
       "GET /userGroup/get/{id}": "packages/functions/src/userGroup.get",
       "PUT /userGroup/update": "packages/functions/src/userGroup.update",
       "DELETE /userGroup/delete": "packages/functions/src/userGroup.delete",
+      // Sessions
+      "GET /session/list": "packages/functions/src/session.list",
+      "POST /session/create": "packages/functions/src/session.create",
+      "GET /session/get/{id}": "packages/functions/src/session.get",
+      "PUT /session/update": "packages/functions/src/session.update",
+      "DELETE /session/delete": "packages/functions/src/session.delete",
     },
   });
 

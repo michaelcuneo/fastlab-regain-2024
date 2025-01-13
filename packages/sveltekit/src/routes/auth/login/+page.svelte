@@ -4,9 +4,6 @@
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
 
-	let dirty: boolean;
-	let invalid: boolean;
-	let focused: boolean;
 	let value: string = '';
 	let submitted = false;
 
@@ -15,7 +12,7 @@
 		submitted = true;
 	};
 
-	$: disabled = focused || !value || !dirty || invalid;
+	$: disabled = !value;
 
 	/** @type {import('./$types').ActionData} */
 	export let form: ActionData;
@@ -36,7 +33,7 @@
 					<input id="email" type="email" bind:value name="email" />
 				</p>
 				<p>
-					<Button type="submit" variant="outlined">SEND MAGIC LINK</Button>
+					<Button type="submit" {disabled} variant="outlined">SEND MAGIC LINK</Button>
 				</p>
 			</form>
 		</Card>
