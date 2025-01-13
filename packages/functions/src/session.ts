@@ -8,7 +8,7 @@ export const listHandler: APIGatewayProxyHandlerV2 = async () => {
 
   return {
     statusCode: 200,
-    body: data ? JSON.stringify(data) : JSON.stringify("No users"),
+    body: data ? JSON.stringify(data) : JSON.stringify("No sessions"),
   };
 }
 

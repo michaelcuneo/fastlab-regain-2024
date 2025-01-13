@@ -2,6 +2,13 @@
 	import Landing from '$lib/components/Landing.svelte';
 	import Welcome from '$lib/components/Welcome.svelte';
 	import { isLanding } from '$lib/utils/store';
+	import type { PageData } from './$types';
+
+	$effect(() => {
+		console.log(data);
+	});
+
+	let { data }: { data: PageData } = $props();
 </script>
 
 <svelte:head>
