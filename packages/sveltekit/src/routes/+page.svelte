@@ -3,8 +3,11 @@
 	import background from '$lib/images/background.jpeg';
 	import Button from '@smui/button';
 	import { goto } from '$app/navigation';
-	import { user } from '$lib/utils/store';
 	import Card, { Content } from '@smui/card';
+
+	$effect(() => {
+		console.log(data);
+	});
 
 	let { data }: { data: PageServerData } = $props();
 </script>

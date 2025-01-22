@@ -11,5 +11,5 @@ export const load = (async ({ fetch }) => {
 		return { authenticated };
 	}
 
-	return { authenticated: false };
+	return { authenticated: false, user: undefined };
 }) satisfies LayoutLoad;
