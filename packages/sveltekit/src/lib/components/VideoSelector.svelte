@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { isEmpty } from '$lib/utils/setup';
+	import { isEmpty } from '$lib/utils/helpers';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import Card, { Content, Actions, PrimaryAction, Media, MediaContent } from '@smui/card';
 	import Button, { Label } from '@smui/button';
+	import { Icon } from '@smui/common';
 	import { difficult, pain, userExercises } from '$lib/utils/store';
 	import { calculateRealTime } from '$lib/utils/helpers';
 	import S3Video from './S3Video.svelte';
@@ -23,7 +24,7 @@
 	})
 </script>
 
-<wrapper>
+<div class="wrapper">
 	<LayoutGrid>
 		{#if selectedVideo?.id !== ''}
 			<Cell span={8}>
@@ -50,6 +51,8 @@
 								(selectedVideo = {
 									id: '',
 									title: '',
+									createdAt: '',
+									updatedAt: '',
 									time: 0
 								})}
 						>
@@ -95,10 +98,10 @@
 			{/if}
 		{/if}
 	</LayoutGrid>
-</wrapper>
+</div>
 
 <style>
-	wrapper {
+	.wrapper {
 		display: flex;
 		position: relative;
 		height: 100%;

@@ -4,7 +4,6 @@
 	import { fade, fly } from 'svelte/transition';
 	import Information from '$lib/components/Information.svelte';
 	import VideoSelector from '$lib/components/VideoSelector.svelte';
-	import { getUser } from '../graphql/queries';
 	import {
 		error,
 		user,
@@ -18,40 +17,12 @@
 		isCompleted
 	} from '$lib/utils/store';
 
-	const downloadUser = () =>
-		(
-			API.graphql(
-				graphqlOperation(getUser, {
-					id: $user.attributes.sub
-				})
-			) as any
-		)
-			.then((res: any) => {
-				usersettings.set(res.data.getUser);
-			})
-			.catch((err: any) => {
-				error.set({
-					status: true,
-					message: 'Error retrieving UserSettings.'
-				});
-			});
+	const downloadUser = () => {
+
+	};
 
 	const createUserExercises = () => {
-		let groupExercises = [];
-		console.log($exercises[0].exerciseGroups.items);
-		for (let i = 0; i < $exercises.length; i++) {
-			for (let j = 0; j < $exercises[i].exerciseGroups.items.length; j++) {
-				for (let k = 0; k < $usersettings.groups.items.length; k++) {
-					if (
-						$usersettings.groups.items[k].groupID === $exercises[i].exerciseGroups.items[j].groupID
-					) {
-						groupExercises.push($exercises[i]);
-					}
-				}
-			}
-		}
-		let uniqueExercises = [...new Set(groupExercises)];
-		userExercises.set(uniqueExercises);
+
 	};
 
 	const addPauseMessage = () => {
@@ -158,16 +129,16 @@
 </script>
 
 <VideoSelector />
-<information-area in:fly={{ y: 200, duration: 2000 }} out:fade>
+<div class="information-area" in:fly={{ y: 200, duration: 2000 }} out:fade>
 	{#each $messages as message}
 		{#if message}
 			<Information bind:message on:buttonClicked={(e) => handleResult(e)} />
 		{/if}
 	{/each}
-</information-area>
+</div>
 
 <style>
-	information-area {
+	.information-area {
 		position: absolute;
 		background: rgba(255, 255, 255, 0.1);
 		margin-top: 90px;
@@ -176,7 +147,7 @@
 		right: 23px;
 		flex-direction: column;
 	}
-	information-area:nth-child(1) {
+	.information-area:nth-child(1) {
 		margin: 90px;
 	}
 </style>

@@ -19,7 +19,7 @@ export const createHandler: APIGatewayProxyHandlerV2 = async (
 
   try {
     const createResult = await AWS.createItem(
-      Table.Users.tableName,
+      Table.UserGroups.tableName,
       {
         id: randomUUID().toString(),
         createdAt: new Date().toISOString(),

@@ -33,7 +33,7 @@ export const handler = AuthHandler({
         };
       },
       onSuccess: async (response) => {
-        const user: User = (await User.userFromEmail(response.email!)) as User;
+        const user: User = (await User.fromEmail(response.email!)) as User;
 
         if (user === undefined) {
           return {

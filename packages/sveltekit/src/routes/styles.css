@@ -1,8 +1,10 @@
 :root {
 	--color-inherit: inherit;
 	--color-transparent: transparent;
+	--color-primary: #248d61;
+  --color-secondary: #676778;
 	--color-background: hsl(0, 0%, 98%, 1);
-	--color-text: hsla(0, 0%, 95%, 1);
+	--color-text: hsla(45, 29%, 97%, 1);
 
 	--font-family-header: 'BenchNine', sans-serif;
 	--font-family-sans: 'Raleway', sans-serif;
@@ -84,24 +86,30 @@ h6 {
 
 h1 {
 	font-size: var(--step-5);
+	line-height: initial;
 }
 
 h2 {
 	font-size: var(--step-4);
+	line-height: initial;
 }
 
 h3 {
 	font-size: var(--step-3);
+	line-height: initial;
 }
 
 h4 {
 	font-size: var(--step-2);
+	line-height: initial;
 }
 
 h5 {
 	font-size: var(--step-1);
+	line-height: initial;
 }
 
 h6 {
 	font-size: var(--step-0);
+	line-height: initial;
 }

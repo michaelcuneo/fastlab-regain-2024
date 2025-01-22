@@ -31,6 +31,11 @@ type Group = {
   updatedAt: string;
 }
 
+type Area = {
+  id: string;
+  status: string;
+}
+
 type Exercise = {
   id: string;
   title: string;

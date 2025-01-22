@@ -20,7 +20,7 @@
 		flex-direction: row;
     justify-content: center;
 		align-items: center;
-    background: hsla(45, 29%, 97%, 1);
+    background: var(--color-text);
 	}
   img {
 		height: 140px;

@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
-	import { v4 as uuidv4 } from 'uuid';
-
+	import { isEmpty } from '$lib/utils/helpers';
+	import { goto } from '$app/navigation';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import Card, { Content } from '@smui/card';
 	import Button from '@smui/button';
@@ -17,82 +16,12 @@
 	let editMessageSubscription;
 	let removeMessageSubscription;
 
-	onMount(() => {
-		createMessageSubscription = (
-			API.graphql(graphqlOperation(onCreateMessages)) as GraphQLSubscription<any>
-		).subscribe({
-			next: ({ value }) => updateReceived(value),
-			error: (error: any) => console.log(error)
-		});
-		editMessageSubscription = (
-			API.graphql(graphqlOperation(onUpdateMessages)) as GraphQLSubscription<any>
-		).subscribe({
-			next: ({ value }) => updateReceived(value),
-			error: (error: any) => console.log(error)
-		});
-		removeMessageSubscription = (
-			API.graphql(graphqlOperation(onDeleteMessages)) as GraphQLSubscription<any>
-		).subscribe({
-			next: ({ value }) => getNewMessages(),
-			error: (error: any) => console.log(error)
-		});
-	});
-
-	onDestroy(() => {
-		createMessageSubscription.unsubscribe();
-		editMessageSubscription.unsubscribe();
-		removeMessageSubscription.unsubscribe();
-	});
-
-	const getNewMessages = async () => {
-		await (
-			API.graphql(
-				graphqlOperation(messagesByDate, {
-					type: 'Message',
-					sortDirection: 'DESC',
-					limit: '1000'
-				})
-			) as GraphQLSubscription<any>
-		)
-			.then((res) => {
-				newMessage = '';
-				helpMessages.set(res.data.messagesByDate.items);
-			})
-			.catch((err) => err);
-	};
-
-	/*
-  if (usersArray.length > 0 && !isEmpty($user) && $user !== null) {
-    for (let i = 0; i < usersArray.length; i++) {
-      if (usersArray[i].id === $user.attributes.sub) {
-        author = usersArray[i].id;
-      }
-    }
-  }
-  */
-
-	// Update the message.
 	const updateReceived = async ({ data }) => {
-		editMessage({
-			id: data.onCreateMessages.id,
-			createdAt: data.onCreateMessages.createdAt,
-			content: data.onCreateMessages.content,
-			type: data.onCreateMessages.type,
-			isSent: true,
-			messagesUserId: data.onCreateMessages.messagesStaffId
-		}).then((res) => getNewMessages());
+
 	};
 
 	const updateMessage = async (message) => {
-		editMessage({
-			id: message.id,
-			createdAt: message.createdAt,
-			content: message.content,
-			type: message.type,
-			isSent: true,
-			messagesUserId: message.messagesStaffId
-		});
-		updatingId = null;
+		
 	};
 
 	const handleSubmit = async (e: any) => {
@@ -105,44 +34,21 @@
 
 	// Add the message.
 	const submitMessage = async () => {
-		addMessage({
-			id: uuidv4(),
-			content: newMessage,
-			createdAt: new Date().toISOString(),
-			type: 'Message',
-			isSent: false,
-			messagesUserId: author
-		});
 	};
 
-	const deleteMessage = async (id) => {
-		removeMessage({
-			id: id
-		});
+	const deleteMessage = async (id: string) => {
 	};
 
-	const handleReset = () => {
-		resetState();
-		goto('/');
-	};
-
-	const handleUpdating = (id) => {
+	const handleUpdating = (id: string) => {
 		if (updatingId === null) {
 			updatingId = id;
 		} else {
-			updatingId = null;
+			updatingId = '';
 		}
 	};
 
-	onMount(() => {
-		if (!isEmpty($usersettings)) {
-			author = $usersettings.id;
-		}
-		getNewMessages();
-	});
-
-	let updatingId = null;
-	let newMessage = null;
+	let updatingId: string = $state('');
+	let newMessage: string = $state('');
 </script>
 
 <div class="wrapper">
@@ -172,7 +78,7 @@
 											style="width: 100%;"
 											variant="outlined"
 											bind:value={message.content}
-											on:keydown={(e) => handleEdit(e, message)}
+											onkeydown={(e) => handleEdit(e, message)}
 										/>
 									{:else}
 										{message.content}
@@ -222,7 +128,7 @@
 		display: flex;
 		flex-direction: column-reverse;
 		overflow: auto;
-		max-height: calc(100vh - 206px);
+		max-height: calc(100vh - 4rem - 140px);
 	}
 	.message {
 		display: flex;

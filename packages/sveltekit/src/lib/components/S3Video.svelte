@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { isPaused, isHalfway, isCompleted } from '$lib/utils/store';
 
-	import { downloadFile } from '$lib/utils/setup';
+	import { downloadFile } from '$lib/utils/helpers';
 
 	let videoComponent: HTMLVideoElement;
 	let time: number = $state(0);

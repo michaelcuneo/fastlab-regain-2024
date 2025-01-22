@@ -1,13 +1,15 @@
 <script>
 	import Card, { Content, Media, MediaContent } from '@smui/card';
+	import Button from '@smui/button';
 	import Tree from '$lib/images/tree.jpeg';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
+	import { goto } from '$app/navigation';
 </script>
 
 <div class="welcome">
 	<LayoutGrid>
 		<Cell span={6}>
-			<Card>
+			<Card style="border-radius: 8px;">
 				<Content>
 				<h2>Welcome to Regain</h2>
 				<p>
@@ -39,20 +41,13 @@
 					stakeholders
 				</p>
 				<p>This is the third iteration.</p>
+				<Button variant="raised" onclick={() => goto("/auth/login")}>Start to Regain</Button>
 				</Content>
 			</Card>
 		</Cell>
 		<Cell span={6}>
-			<Card>
+			<Card style="border-radius: 8px;">
 				<Media style="background-image: url({Tree}); background-repeat: no-repeat; background-position: left;" aspectRatio="square">
-					<MediaContent>
-						<h2
-							class="mdc-typography--headline6"
-							style="color: #fff; position: absolute; bottom: 16px; left: 16px; margin: 0;"
-						>
-							Regain your abilities
-						</h2>
-					</MediaContent>
 				</Media>
 			</Card>
 		</Cell>
@@ -65,14 +60,5 @@
 		background: rgba(255, 255, 255, 0.1);
 		position: relative;
 		height: 100%;
-	}
-	img {
-		position: absolute;
-		top: 0;
-		width: 300px;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		margin: 0;
 	}
 </style>

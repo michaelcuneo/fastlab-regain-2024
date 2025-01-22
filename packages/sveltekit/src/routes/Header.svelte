@@ -1,5 +1,9 @@
 <script lang="ts">
-	let previousY: number = $state(0);
+  import Dialog, { Title as DialogTitle, Content, Actions } from "@smui/dialog";
+  import Button, { Label as ButtonLabel, Icon } from "@smui/button";
+	import { goto } from "$app/navigation";
+	
+  let previousY: number = $state(0);
 	let currentY: number = $state(0);
 	let clientHeight: number = $state(0);
   let scrollDirection: string = $state('');
@@ -59,14 +63,13 @@
   </div>
   <div>
     <ul>
-      <li>
-        <a class="nav" href="/auth/login">Login</a>
-      </li>
+      {#if !authenticated}
+        <li>
+          <a class="nav" href="/auth/login">Login</a>
+        </li>
+      {/if}
       <li>
         <a class="nav" href="/about">About</a>
-      </li>
-      <li>
-        <a class="nav" href="/help">Help</a>
       </li>
       {#if authenticated}
       <li>
@@ -82,9 +85,33 @@
         <a class="nav" href={null} onclick={() => open = !open}>Logout</a>
       </li>
       {/if}
+      <li>
+        <a class="nav" href="/help">Help</a>
+      </li>
     </ul>
   </div>
 </header>
+
+<Dialog
+	bind:open
+	aria-labelledby="default-focus-title"
+	aria-describedby="default-focus-content"
+>
+	<DialogTitle id="default-focus-title">WARNING</DialogTitle>
+	<Content id="default-focus-content">
+		<p>Are you sure you want to sign out?</p>
+	</Content>
+	<Actions>
+    <form action="/auth/logout" method="POST">
+      <Button type="submit">
+        <ButtonLabel>YES, SIGN ME OUT</ButtonLabel>
+      </Button>
+    </form>
+		<Button onclick={() => (open = !open)}>
+			<ButtonLabel>NO</ButtonLabel>
+		</Button>
+	</Actions>
+</Dialog>
 
 <style lang="postcss">
   header {

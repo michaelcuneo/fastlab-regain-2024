@@ -22,7 +22,7 @@ export const load: PageServerLoad = async ({ cookies, url }) => {
 
 	// Set session cookie in browser with user id and expiration time
 	cookies.set(SESSION_COOKIE_NAME, session.id, {
-		maxAge: 24 * 60 * 60, // 24 hours
+		maxAge: 7884000,
 		path: '/' // set cookie for all routes
 	});
 

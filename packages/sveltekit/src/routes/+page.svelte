@@ -17,7 +17,7 @@
 </svelte:head>
 
 <div class="welcome" style="background-image: url({background})">
-	<Card>
+	<Card style="border-radius: 16px;">
 		<Content>
 			{#if data.authenticated}
 				<Button variant="raised" onclick={() => goto('/settings')}>START TO REGAIN</Button>

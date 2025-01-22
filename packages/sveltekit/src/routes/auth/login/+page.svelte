@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '@smui/button';
-	import Card from '@smui/card';
+	import Card, { Content } from '@smui/card';
 	import CircularProgress from '@smui/circular-progress';
 	import Textfield from '@smui/textfield';
 	import { enhance } from '$app/forms';
@@ -21,31 +21,52 @@
 	let { form }: { form: ActionData } = $props();
 </script>
 
-{#if submitted && !form?.success}
+{#if submitted && !form?.error && !form?.success}
 	<div class="wrapper">
-		<CircularProgress style="height: 32px; width: 32px;" indeterminate />
+		<Card>
+			<Content>
+				<div style="display: flex; flex-direction: column; align-items: center;">
+					<CircularProgress style="height: 32px; width: 32px;" indeterminate />
+					<p>Please wait.</p>
+					<h5>
+						Sending an email to {value}
+					</h5>
+				</div>
+			</Content>
+		</Card>
 	</div>
 {/if}
 {#if !submitted && !form?.success}
 	<div class="wrapper">
 		<Card>
-			<form class="form" method="POST" action="?/magicLinks" use:enhance={onSubmit}>
-				<h4>LOGIN WITH YOUR EMAIL</h4>
-				<Textfield variant="outlined" id="email" type="email" bind:value label="email" />
-				<Button type="submit" {disabled} variant="outlined">SEND MAGIC LINK</Button>
-			</form>
+			<Content>
+				<form class="form" method="POST" action="?/magicLinks" use:enhance={onSubmit}>
+					<h4>LOGIN WITH YOUR EMAIL</h4>
+					<p>Simply supply your email and an account will be created instantly for you.</p>
+					<p>A login link will be sent to your email address</p>
+					<p>Click on this link and you will be automatically logged in to Regain</p>
+					<Textfield variant="outlined" id="email" type="email" input$name="email" bind:value label="email" />
+					<Button style="margin-top: 2rem;" type="submit" {disabled} variant="raised">SEND MAGIC LINK</Button>
+				</form>
+			</Content>
 		</Card>
 	</div>
 {:else if form?.success}
 	<div class="wrapper">
-		<h3>
-			An email has been sent to {value}, click on the link in the email to sign in.
-		</h3>
+		<Card>
+			<Content>
+				<h5>An email has been sent to {value}</h5>
+				<p>Click on the link in this email, to login to Regain</p>
+			</Content>
+		</Card>
 	</div>
 {:else if form?.error}
 	<div class="wrapper">
 		<Card>
-			<h3>{form.error}</h3>
+			<Content>
+				<h4>{form.error}</h4>
+				<p>For further information, ask a question in, <a href="/help">help</a></p>
+			</Content>
 		</Card>
 	</div>
 {/if}
@@ -66,15 +87,11 @@
 		flex-direction: column;
 		width: 300px;
 		background: var(--surface-color);
-		padding: 0.8rem;
-		margin: 0.8rem;
-		border-radius: 10px;
-	}
-	h3 {
-		line-height: 0.8rem;
-		color: white;
 	}
 	h4 {
-		line-height: 0.4rem;
+		line-height: 0rem;
+	}
+	h5 {
+		line-height: 0rem;
 	}
 </style>

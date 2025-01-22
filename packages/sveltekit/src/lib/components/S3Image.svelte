@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { getURL } from "./getURL";
 
   let url: string;
 
   onMount(async () => {
-    url = await getURL(image);
+    url = await fetch(image)
+      .then(res => res.json());
   });
 
   export let image: string;

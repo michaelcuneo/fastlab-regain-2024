@@ -6,7 +6,7 @@
 
 	onMount(() => {
 		Chart.defaults.font.size = 16;
-		Chart.defaults.font.family = 'Nunito';
+		Chart.defaults.font.family = 'Raleway';
 		Chart.defaults.font.weight = 'bold';
 
 		new Chart(polarCanvas, {

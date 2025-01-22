@@ -7,7 +7,7 @@
     pain.set(pains);
   };
 
-  let { video }: { video: Exercise } = $props();
+  let { video }: { video: Exercise | undefined } = $props();
 </script>
 
 <Card style="border-radius: 16px;">

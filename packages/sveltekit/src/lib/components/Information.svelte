@@ -29,8 +29,8 @@
 	export let message: Message;
 </script>
 
-<information>
-	<message>
+<div class="information">
+	<div class="message">
 		{#if message.closeIcon}
 			<IconButton
 				style="padding: 0; margin: 0;"
@@ -41,16 +41,16 @@
 		<statement>{message.message}</statement>
 		{#if !isEmpty(message.buttons)}
 			{#each message.buttons as button}
-				<Button variant="raised" on:click={() => buttonClicked(button.result)}
+				<Button variant="raised" onclick={() => buttonClicked(button.result)}
 					>{button.title}</Button
 				>
 			{/each}
 		{/if}
-	</message>
-</information>
+	</div>
+</div>
 
 <style>
-	information {
+	.information {
 		display: flex;
 		flex-direction: row;
 		height: 90px;
@@ -61,7 +61,7 @@
 		box-sizing: border-box;
 		border-radius: 25px;
 	}
-	message {
+	.message {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -70,8 +70,5 @@
 		font-weight: 700;
 		line-height: 26px;
 		color: #132a13;
-	}
-	statement {
-		padding: 0rem 1rem;
 	}
 </style>
