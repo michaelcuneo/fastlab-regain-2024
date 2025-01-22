@@ -10,7 +10,7 @@
 </script>
 
 <div class="wrapper">
-	<h1>Successfully Logged in...</h1>
+	<h2>Successfully Logged in...</h2>
 </div>
 
 <style>

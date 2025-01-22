@@ -2,6 +2,8 @@
 	import { createEventDispatcher } from 'svelte';
 	import { isEmpty } from '$lib/utils/helpers';
 	import { messages } from '$lib/utils/store';
+	import IconButton from '@smui/icon-button';
+	import Button from '@smui/button';
 
 	const dispatch = createEventDispatcher();
 
@@ -24,7 +26,7 @@
 			button: event
 		});
 
-	export let message: messageType;
+	export let message: Message;
 </script>
 
 <information>
@@ -33,7 +35,7 @@
 			<IconButton
 				style="padding: 0; margin: 0;"
 				class="material-icons"
-				on:click={handleRemoveMessage}>remove_circle</IconButton
+				onclick={handleRemoveMessage}>remove_circle</IconButton
 			>
 		{/if}
 		<statement>{message.message}</statement>

@@ -139,7 +139,7 @@
 		]);
 		isCompleted.set(false);
 		setTimeout(() => {
-			push('/progress');
+			goto('/progress');
 		}, 4000);
 	};
 

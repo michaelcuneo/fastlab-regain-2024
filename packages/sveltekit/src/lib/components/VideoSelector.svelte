@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { isEmpty } from '$lib/utils/setup';
+	import LayoutGrid, { Cell } from '@smui/layout-grid';
+	import Card, { Content, Actions, PrimaryAction, Media, MediaContent } from '@smui/card';
+	import Button, { Label } from '@smui/button';
 	import { difficult, pain, userExercises } from '$lib/utils/store';
 	import { calculateRealTime } from '$lib/utils/helpers';
 	import S3Video from './S3Video.svelte';
@@ -7,17 +10,22 @@
 	import Difficulty from './Difficulty.svelte';
 	import Pain from './Pain.svelte';
 
-	let selectedVideo: exerciseType;
-	$: selectedVideo = {
-		id: '',
-		title: '',
-		time: 0
-	};
+	let selectedVideo: Exercise | undefined = $state(undefined);
+
+	$effect(() => {
+		selectedVideo = {
+			id: '',
+			title: '',
+			createdAt: '',
+			updatedAt: '',
+			time: 0
+		}
+	})
 </script>
 
 <wrapper>
 	<LayoutGrid>
-		{#if selectedVideo.id !== ''}
+		{#if selectedVideo?.id !== ''}
 			<Cell span={8}>
 				<S3Video key={selectedVideo?.video?.key} width="100%" height="100%" autoplay={true} />
 			</Cell>
@@ -30,15 +38,15 @@
 				{/if}
 				<Card style="border-radius: 16px;">
 					<h2 class="mdc-typography--headline6" style="margin: 1em;">
-						{selectedVideo.title}
-						{calculateRealTime(selectedVideo.time)}
+						{selectedVideo?.title}
+						{calculateRealTime(selectedVideo?.time)}
 					</h2>
 					<Content>
-						<p>{selectedVideo.description}</p>
+						<p>{selectedVideo?.description}</p>
 					</Content>
 					<Actions fullBleed>
 						<Button
-							on:click={() =>
+							onclick={() =>
 								(selectedVideo = {
 									id: '',
 									title: '',
@@ -52,13 +60,13 @@
 				</Card>
 			</Cell>
 		{/if}
-		{#if selectedVideo.id === ''}
+		{#if selectedVideo?.id === ''}
 			{#if !isEmpty($userExercises)}
 				{#each $userExercises as exercise}
 					<Cell span={3}>
 						<Card style="border-radius: 16px;">
 							<PrimaryAction
-								on:click={() => {
+								onclick={() => {
 									selectedVideo = exercise;
 								}}
 							>

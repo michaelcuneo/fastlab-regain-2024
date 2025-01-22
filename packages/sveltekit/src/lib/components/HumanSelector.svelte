@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from '@michaelcuneo/svelte-components';
+	import Button from "@smui/button";
 
 	let {
 		activateArea,
@@ -7,7 +7,7 @@
 		handleSave
 	}: {
 		activateArea: (area: string) => Promise<void>;
-		activeAreas: activeAreas[];
+		activeAreas: Areas[];
 		handleSave: () => void;
 	} = $props();
 </script>

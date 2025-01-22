@@ -1,26 +1,29 @@
 <script lang="ts">
-	import { Button, Card, Loader } from '@michaelcuneo/svelte-components';
-	import { Label } from '@michaelcuneo/meltui-components';
+	import Button from '@smui/button';
+	import Card from '@smui/card';
+	import CircularProgress from '@smui/circular-progress';
+	import Textfield from '@smui/textfield';
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
 
-	let value: string = '';
-	let submitted = false;
+  let value: string | null = $state(null);
+	let submitted: boolean = $state(false);
+	let disabled: boolean = $state(false);
 
 	const onSubmit = () => {
-		console.log('submitting');
 		submitted = true;
 	};
 
-	$: disabled = !value;
-
-	/** @type {import('./$types').ActionData} */
-	export let form: ActionData;
+	$effect(() => {
+		disabled = !value;
+	});
+	
+	let { form }: { form: ActionData } = $props();
 </script>
 
 {#if submitted && !form?.success}
 	<div class="wrapper">
-		<Loader size="64px" />
+		<CircularProgress style="height: 32px; width: 32px;" indeterminate />
 	</div>
 {/if}
 {#if !submitted && !form?.success}
@@ -28,13 +31,8 @@
 		<Card>
 			<form class="form" method="POST" action="?/magicLinks" use:enhance={onSubmit}>
 				<h4>LOGIN WITH YOUR EMAIL</h4>
-				<p>
-					<Label forId="email" label="Email"></Label>
-					<input id="email" type="email" bind:value name="email" />
-				</p>
-				<p>
-					<Button type="submit" {disabled} variant="outlined">SEND MAGIC LINK</Button>
-				</p>
+				<Textfield variant="outlined" id="email" type="email" bind:value label="email" />
+				<Button type="submit" {disabled} variant="outlined">SEND MAGIC LINK</Button>
 			</form>
 		</Card>
 	</div>
@@ -58,7 +56,7 @@
 		position: relative;
 		justify-content: center;
 		align-items: center;
-		height: calc(100vh - 88px);
+		height: 100%;
 		background: rgba(255, 255, 255, 0.1);
 		width: 100vw;
 		z-index: 0;
@@ -71,11 +69,6 @@
 		padding: 0.8rem;
 		margin: 0.8rem;
 		border-radius: 10px;
-	}
-	p {
-		display: flex;
-		flex-direction: column;
-		width: 100%;
 	}
 	h3 {
 		line-height: 0.8rem;

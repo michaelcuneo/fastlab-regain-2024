@@ -33,7 +33,7 @@
 	};
 
 	const handleMouseup = (e: any) => {
-		isPaused.value = false;
+		$isPaused = false;
 		let date = new Date();
 		if ((date as any) - lastMouseDown < 300) {
 			if (paused) e.target.play();
@@ -48,12 +48,12 @@
 
 	$effect(() => {
 		if (time > duration / 2) {
-			isHalfway.value = true;
+			$isHalfway = true;
 		}
 		if (Math.round(time) == Math.round(duration)) {
-			isCompleted.value = true;
+			$isCompleted = true;
 		}
-		paused ? (isPaused.value = true) : (isPaused.value = false);
+		paused ? ($isPaused = true) : ($isPaused = false);
 	});
 
 	let {

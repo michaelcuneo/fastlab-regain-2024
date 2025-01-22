@@ -1,24 +1,41 @@
 <script lang="ts">
-	import Landing from '$lib/components/Landing.svelte';
-	import Welcome from '$lib/components/Welcome.svelte';
-	import { isLanding } from '$lib/utils/store';
+	import type { PageServerData } from './$types';
+	import background from '$lib/images/background.jpeg';
+	import Button from '@smui/button';
+	import { goto } from '$app/navigation';
+	import { user } from '$lib/utils/store';
+	import Card, { Content } from '@smui/card';
+
+	let { data }: { data: PageServerData } = $props();
 </script>
 
 <svelte:head>
 	<title>Regain Home</title>
 </svelte:head>
 
-<div class="wrapper">
-	{#if $isLanding === true}
-		<Landing />
-	{:else if $isLanding === false}
-		<Welcome />
-	{/if}
+<div class="welcome" style="background-image: url({background})">
+	<Card>
+		<Content>
+			{#if data.authenticated}
+				<Button variant="raised" onclick={() => goto('/settings')}>START TO REGAIN</Button>
+			{:else}
+				<Button variant="raised" onclick={() => goto('/auth/login')}>START TO REGAIN</Button
+				>
+			{/if}
+		</Content>
+	</Card>
 </div>
 
 <style>
-	.wrapper {
+	.welcome {
 		display: flex;
-		height: calc(100vh - 88px);
+		flex-direction: column;
+		align-items: center;
+		padding: 10rem;
+		width: 100%;
+		height: calc(100vh - 4rem - 140px);
+		background-repeat: no-repeat;
+		background-size: cover;
+		justify-content: end;
 	}
 </style>

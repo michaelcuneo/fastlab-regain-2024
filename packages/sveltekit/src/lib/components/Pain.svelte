@@ -1,13 +1,13 @@
 <script lang="ts">
   import { pain } from "$lib/utils/store";
+  import Card, { Content, Actions } from "@smui/card";
+  import Button from "@smui/button";
 
   const handlePain = (pains: number) => {
-    console.log(pains, video);
-    // Set the pain for this video for this timestamp for the client.
-    pain.value = pains;
+    pain.set(pains);
   };
 
-  export let video: exerciseType;
+  let { video }: { video: Exercise } = $props();
 </script>
 
 <Card style="border-radius: 16px;">
@@ -16,18 +16,18 @@
     <p>How painful was it to perform this task today?</p>
   </Content>
   <Actions fullBleed>
-    <Button style="background: #69B34C" on:click={() => handlePain(1)}
+    <Button style="background: #69B34C" onclick={() => handlePain(1)}
       >NONE</Button
     >
-    <Button style="background: #ACB334" on:click={() => handlePain(2)}>2</Button
+    <Button style="background: #ACB334" onclick={() => handlePain(2)}>2</Button
     >
-    <Button style="background: #FAB733" on:click={() => handlePain(3)}>3</Button
+    <Button style="background: #FAB733" onclick={() => handlePain(3)}>3</Button
     >
-    <Button style="background: #FF8E15" on:click={() => handlePain(4)}>4</Button
+    <Button style="background: #FF8E15" onclick={() => handlePain(4)}>4</Button
     >
-    <Button style="background: #FF4E11" on:click={() => handlePain(5)}>5</Button
+    <Button style="background: #FF4E11" onclick={() => handlePain(5)}>5</Button
     >
-    <Button style="background: #FF0D0D" on:click={() => handlePain(6)}
+    <Button style="background: #FF0D0D" onclick={() => handlePain(6)}
       >PAINFUL</Button
     >
   </Actions>

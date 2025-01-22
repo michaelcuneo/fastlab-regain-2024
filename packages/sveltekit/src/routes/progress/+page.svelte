@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { LayoutGrid } from '@michaelcuneo/svelte-components';
+	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import Charts from '$lib/components/Charts.svelte';
 
 	let video: HTMLVideoElement;
@@ -26,7 +26,7 @@
 
 <div class="layout">
 	<LayoutGrid cols="6" gap="2">
-		<Grid>
+		<Cell>
 			<div class="container">
 				<div class="inside">
 					<div class="overlay" style="--progress: {slider}">
@@ -42,13 +42,13 @@
 					</video>
 				</div>
 			</div>
-		</Grid>
-		<Grid>
+		</Cell>
+		<Cell>
 			<div class="chart-container">
 				<h1>Individual Progress</h1>
 				<Charts />
 			</div>
-		</Grid>
+		</Cell>
 	</LayoutGrid>
 </div>
 

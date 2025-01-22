@@ -2,9 +2,15 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
 
+	import LayoutGrid, { Cell } from '@smui/layout-grid';
+	import Card, { Content } from '@smui/card';
+	import Button from '@smui/button';
+	import Textfield from '@smui/textfield';
+	import IconButton from '@smui/icon-button';
+
 	import { user, allUsers, helpMessages, usersettings } from '$lib/utils/store';
 
-	let usersArray = allUsers.value;
+	let usersArray = $allUsers;
 	let author: string;
 
 	let createMessageSubscription;
@@ -139,39 +145,28 @@
 	let newMessage = null;
 </script>
 
+<div class="wrapper">
 <LayoutGrid>
-	<Cell span={4}>
-		<Card>
-			<Paper>
-				<Title
-					>The following button will reset the cache and clean all app functions to their default,
-					this button will also log you out.</Title
-				>
-				<Subtitle>EMERGENCY ONLY</Subtitle>
-				<Button variant="raised" on:click={handleReset}>RESET APP</Button>
-			</Paper>
-		</Card>
-	</Cell>
-	<Cell span={8}>
+	<Cell span={12}>
 		<Card>
 			<Content>
-				<message-scroller>
+				<div class="message-scroller">
 					{#each $helpMessages as message}
-						<message>
+						<div class="message">
 							<header>
-								<staff>
+								<div class="staff">
 									{#if message.user}
 										{message.user.username}
 									{:else}
 										GUEST
 									{/if}
-								</staff>
-								<time>
+								</div>
+								<div class="time">
 									{new Date(message.createdAt).toUTCString()}
-								</time>
+								</div>
 							</header>
-							<message-content>
-								<message-text>
+							<div class="message-content">
+								<div class="message-text">
 									{#if updatingId == message.id}
 										<Textfield
 											style="width: 100%;"
@@ -182,47 +177,54 @@
 									{:else}
 										{message.content}
 									{/if}
-								</message-text>
-								<message-buttons>
+								</div>
+								<div class="message-buttons">
 									<IconButton
 										style="color: green;"
 										class="material-icons"
-										on:click={() => handleUpdating(message.id)}>edit</IconButton
+										onclick={() => handleUpdating(message.id)}>edit</IconButton
 									>
 									<IconButton
 										style="color: red;"
 										class="material-icons"
-										on:click={() => deleteMessage(message.id)}>delete</IconButton
+										onclick={() => deleteMessage(message.id)}>delete</IconButton
 									>
-								</message-buttons>
-							</message-content>
-						</message>
+								</div>
+							</div>
+						</div>
 					{/each}
-				</message-scroller>
-				<message-entry>
+				</div>
+				<div class="message-entry">
 					<Textfield
 						style="padding-right: 0.2em; width: 100%;"
 						variant="outlined"
 						bind:value={newMessage}
-						on:keydown={(e) => handleSubmit(e)}
+						onkeydown={(e) => handleSubmit(e)}
 					/>
-					<Button variant="raised" on:click={() => newMessage !== null && submitMessage()}
+					<Button variant="raised" onclick={() => newMessage !== null && submitMessage()}
 						>send</Button
 					>
-				</message-entry>
+				</div>
 			</Content>
 		</Card>
 	</Cell>
 </LayoutGrid>
+</div>
 
 <style>
-	message-scroller {
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		background: rgba(255, 255, 255, 0.1);
+		flex: 1;
+	}
+	.message-scroller {
 		display: flex;
 		flex-direction: column-reverse;
 		overflow: auto;
 		max-height: calc(100vh - 206px);
 	}
-	message {
+	.message {
 		display: flex;
 		flex-direction: column;
 		padding: 1em;
@@ -230,18 +232,18 @@
 		border: 1px solid black;
 		border-radius: 3px;
 	}
-	message-entry {
+	.message-entry {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		margin-top: 1em;
 	}
-	message-text {
+	.message-text {
 		display: flex;
 		align-items: flex-end;
 		width: 100%;
 	}
-	message-buttons {
+	.message-buttons {
 		display: flex;
 		align-items: flex-end;
 		flex-direction: row;
@@ -252,19 +254,19 @@
 		justify-content: space-between;
 		padding-bottom: 0.2em;
 	}
-	staff {
+	.staff {
 		line-height: calc(11px + (14 - 11) * (100vw - 320px) / (1920 - 320));
 		font-size: calc(11px + (14 - 11) * (100vw - 320px) / (1920 - 320));
 		font-family: monospace;
 		font-weight: 200;
 	}
-	message-content {
+	.message-content {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		padding-bottom: 0.2em;
 	}
-	time {
+	.time {
 		line-height: calc(11px + (14 - 11) * (100vw - 320px) / (1920 - 320));
 		font-size: calc(11px + (14 - 11) * (100vw - 320px) / (1920 - 320));
 		font-family: monospace;

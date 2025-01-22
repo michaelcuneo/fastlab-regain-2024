@@ -1,8 +1,8 @@
 import { userExercises } from './store';
 
-export const calculateRealTime = (time: number) => {
-  const minutes: number = Math.floor(time / 60);
-  const seconds: number = Math.floor(time - minutes * 60);
+export const calculateRealTime = (time: number | undefined) => {
+  const minutes: number = Math.floor(time ? time / 60 : 0);
+  const seconds: number = Math.floor(time ? time - minutes * 60 : 0);
   return minutes + ':' + seconds;
 }
 
