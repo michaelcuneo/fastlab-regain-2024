@@ -1,9 +1,12 @@
-<script>
-	import Card, { Content, Media, MediaContent } from '@smui/card';
+<script lang="ts">
+	import Card, { Content, Media } from '@smui/card';
+	import type { PageData } from '../$types';
 	import Button from '@smui/button';
 	import Tree from '$lib/images/tree.jpeg';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import { goto } from '$app/navigation';
+
+	let { data }: { data: PageData } = $props();
 </script>
 
 <div class="welcome">
@@ -41,7 +44,11 @@
 					stakeholders
 				</p>
 				<p>This is the third iteration.</p>
-				<Button variant="raised" onclick={() => goto("/auth/login")}>Start to Regain</Button>
+				{#if !data.authenticated}
+					<Button variant="raised" onclick={() => goto("/auth/login")}>Start to Regain</Button>
+				{:else}
+					<Button variant="raised" onclick={() => goto("/exercises")}>Start to Regain</Button>
+				{/if}
 				</Content>
 			</Card>
 		</Cell>

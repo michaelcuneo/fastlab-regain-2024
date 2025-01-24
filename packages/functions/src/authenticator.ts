@@ -1,8 +1,9 @@
 import { Config } from "sst/node/config";
 import { AuthHandler, LinkAdapter } from "sst/node/auth";
-import { User } from "@fastlab-regain-2024/core/user";
+import { AWS } from "@fastlab-regain-2024/core/aws";
 import { mailer } from "@fastlab-regain-2024/core/nodemailer";
 import jwt from "jsonwebtoken";
+import { Table } from "sst/node/table";
 
 declare module "sst/node/auth" {
   export interface SessionTypes {
@@ -33,7 +34,7 @@ export const handler = AuthHandler({
         };
       },
       onSuccess: async (response) => {
-        const user: User = (await User.fromEmail(response.email!)) as User;
+        const user: User = (await AWS.getItem(Table.Users.tableName, { email: response.email! })) as User;
 
         if (user === undefined) {
           return {

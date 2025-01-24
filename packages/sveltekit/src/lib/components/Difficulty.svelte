@@ -4,7 +4,10 @@
 	import Button from '@smui/button';
 
 	const handleDifficult = (difficulty: number) => {
-		difficult.set(difficulty);
+		difficult.current = difficulty;
+		
+		// TODO: Save the difficulty to the database with the video ID and user ID and timestamp.
+
 	};
 
 	let { video }: { video: Exercise | undefined } = $props();

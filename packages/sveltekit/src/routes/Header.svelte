@@ -85,9 +85,11 @@
         <a class="nav" href={null} onclick={() => open = !open}>Logout</a>
       </li>
       {/if}
+      <!--
       <li>
         <a class="nav" href="/help">Help</a>
       </li>
+      -->
     </ul>
   </div>
 </header>
@@ -103,7 +105,7 @@
 	</Content>
 	<Actions>
     <form action="/auth/logout" method="POST">
-      <Button type="submit">
+      <Button class="error-button" type="submit" variant="raised">
         <ButtonLabel>YES, SIGN ME OUT</ButtonLabel>
       </Button>
     </form>

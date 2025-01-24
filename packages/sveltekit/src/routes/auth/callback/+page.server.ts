@@ -1,4 +1,4 @@
-import type { PageServerLoad } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import jwt from 'jsonwebtoken';
 import { redirect } from '@sveltejs/kit';
 import { SESSION_COOKIE_NAME } from '$lib/utils/constants.js';
@@ -40,7 +40,15 @@ export const load: PageServerLoad = async ({ cookies, url }) => {
 	}
 
 	return {
-		userId: user.id,
-		email: user.email
+		user
 	};
 };
+
+export const actions = {
+	async redirect({ request }: { request: Request }) {
+		const formData: FormData = await request.formData();
+		const location: string = formData.get('location')?.toString() || '';
+
+		redirect(303, location);
+	}
+} satisfies Actions;

@@ -10,14 +10,17 @@ type Mailer = {
 type User = {
   id: string;
   email: string;
+  onboard: boolean;
+  overallProgress: number;
+  groups: Group[];
   createdAt: string;
   updatedAt: string;
 };
 
-type ExerciseGroup = {
+type UserStats = {
   id: string;
-  exerciseId: string;
-  groupId: string;
+  userId: string;
+  statId: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -26,14 +29,29 @@ type Group = {
   id: string;
   title: string;
   users: User[];
-  groups: Exercise[];
+  exercises: Exercise[];
   createdAt: string;
   updatedAt: string;
 }
 
+type GroupExercises = {
+  id: string;
+  groupId: string;
+  exerciseId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+type UserGroup = {
+  id: string;
+  userId: string;
+  groupId: string;
+}
+
 type Area = {
   id: string;
-  status: string;
+  name: string;
+  status: boolean;
 }
 
 type Exercise = {
@@ -44,9 +62,8 @@ type Exercise = {
   thumbnail?: Image;
   exerciseVideoId?: string;
   exerciseThumbnailId?: string;
-  groups?: object;
+  groupId?: string;
   video?: Video;
-  exerciseGroups?: Group[];
   createdAt: string;
   updatedAt: string;
 }
@@ -65,31 +82,22 @@ type Error = {
   message: string;
 }
 
-type UserToken = {
-  userId: string;
-  email: string;
-  iat: number;
-  exp: number;
-};
-
-type UserLookup = {
-  id: string;
-};
-
 type Session = {
   id: string;
   userId: string;
 };
 
-type Message = {
-  id: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  type: string;
-  isSent: boolean;
-  messagesUserId: string;
-};
+type Information = {
+  stayOn: boolean;
+  closeIcon: boolean;
+  message: string;
+  buttons?: Button[];
+}
+
+type Button = {
+  title: string;
+  result: string;
+}
 
 type AppSyncEvent = {
   info: {

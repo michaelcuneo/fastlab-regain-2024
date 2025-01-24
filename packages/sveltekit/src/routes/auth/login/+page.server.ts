@@ -1,5 +1,6 @@
 import type { Actions } from './$types';
 import { Api } from 'sst/node/api';
+import { randomUUID } from "crypto";
 
 export const actions = {
 	async magicLinks({ request }: { request: Request }) {
@@ -18,13 +19,22 @@ export const actions = {
 			const user = await userResponse.json();
 
 			// If user does not exist, create the user.
-			if (user === "User doesn't exist") {
+			if (user === "Error: User doesn't exist") {
 				const userCreateURL = `${Api.regainApi.url}/user/create`;
 
 				const createUserData = await fetch(userCreateURL, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(email)
+					body: JSON.stringify({
+						id: randomUUID().toString(),
+						createdAt: new Date().toISOString(),
+						updatedAt: new Date().toISOString(),
+						emailNotify: true,
+						chatHelp: true,
+						onboard: false,
+						overallProgress: 0,
+						email: email,
+					})
 				});
 
 				if (!createUserData.ok) {

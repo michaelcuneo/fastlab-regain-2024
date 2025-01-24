@@ -1,15 +1,16 @@
 <script lang="ts">
-	import type { PageServerData } from './$types';
+	import type { PageData } from './$types';
 	import background from '$lib/images/background.jpeg';
 	import Button from '@smui/button';
 	import { goto } from '$app/navigation';
 	import Card, { Content } from '@smui/card';
+	import { exercises } from '$lib/utils/store';
 
 	$effect(() => {
-		console.log(data);
+		exercises.current = data.exerciseData;
 	});
 
-	let { data }: { data: PageServerData } = $props();
+	let { data }: { data: PageData } = $props();
 </script>
 
 <svelte:head>
@@ -20,7 +21,7 @@
 	<Card style="border-radius: 16px;">
 		<Content>
 			{#if data.authenticated}
-				<Button variant="raised" onclick={() => goto('/settings')}>START TO REGAIN</Button>
+				<Button variant="raised" onclick={() => goto('/exercises')}>START TO REGAIN</Button>
 			{:else}
 				<Button variant="raised" onclick={() => goto('/auth/login')}>START TO REGAIN</Button
 				>

@@ -31,10 +31,10 @@
 				<S3Video key={selectedVideo?.video?.key} width="100%" height="100%" autoplay={true} />
 			</Cell>
 			<Cell span={4}>
-				{#if $difficult}
+				{#if difficult.current}
 					<Difficulty video={selectedVideo} />
 				{/if}
-				{#if $pain}
+				{#if pain.current}
 					<Pain video={selectedVideo} />
 				{/if}
 				<Card style="border-radius: 16px;">
@@ -64,8 +64,8 @@
 			</Cell>
 		{/if}
 		{#if selectedVideo?.id === ''}
-			{#if !isEmpty($userExercises)}
-				{#each $userExercises as exercise}
+			{#if !isEmpty(userExercises.current)}
+				{#each userExercises.current as exercise}
 					<Cell span={3}>
 						<Card style="border-radius: 16px;">
 							<PrimaryAction

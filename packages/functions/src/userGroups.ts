@@ -47,7 +47,7 @@ export const createHandler: APIGatewayProxyHandlerV2 = async (
   }
 };
 
-export const fromEmailHandler: APIGatewayProxyHandlerV2 = async (event) => {
+export const getHandler: APIGatewayProxyHandlerV2 = async (event) => {
   const email = event?.pathParameters?.id || '';
 
 	try {

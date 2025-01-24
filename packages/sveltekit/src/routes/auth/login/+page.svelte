@@ -42,9 +42,10 @@
 			<Content>
 				<form class="form" method="POST" action="?/magicLinks" use:enhance={onSubmit}>
 					<h4>LOGIN WITH YOUR EMAIL</h4>
-					<p>Simply supply your email and an account will be created instantly for you.</p>
-					<p>A login link will be sent to your email address</p>
-					<p>Click on this link and you will be automatically logged in to Regain</p>
+					<p>Simply use your email to sign in and an account will be created instantly for you.</p>
+					<p>If you already have an account, use this same email, to get back in to Regain.</p>
+					<p>A login link will be sent each time to this email address.</p>
+					<p>Click on the link in the email, and you will be automatically logged in to Regain.</p>
 					<Textfield variant="outlined" id="email" type="email" input$name="email" bind:value label="email" />
 					<Button style="margin-top: 2rem;" type="submit" {disabled} variant="raised">SEND MAGIC LINK</Button>
 				</form>

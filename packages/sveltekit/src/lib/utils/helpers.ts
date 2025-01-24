@@ -1,4 +1,4 @@
-import { userExercises } from './store';
+import { userGroups } from './store';
 
 export const calculateRealTime = (time: number | undefined) => {
   const minutes: number = Math.floor(time ? time / 60 : 0);
@@ -6,8 +6,8 @@ export const calculateRealTime = (time: number | undefined) => {
   return minutes + ':' + seconds;
 }
 
-export const onlyUnique = (value: string, index: number, self: string) => {
-  return self.indexOf(value) === index;
+export const onlyUnique = (value: Exercise, index: number, self: Exercise[]) => {
+  return self.findIndex(v => v.id === value.id) === index;
 }
 
 export const isEmpty = (obj: object) => {
@@ -15,25 +15,23 @@ export const isEmpty = (obj: object) => {
 };
 
 export const setupUserExercises = async (exercises: Exercise[], usersettings: User) => {
-  let exerciseList = [];
+  let exerciseList: Exercise[] = [];
 
   for (let i = 0; i < exercises.length; i++) {
-    for (let j = 0; j < usersettings.groups.items.length; j++) {
-      if (usersettings.groups.items[j].group.id === exercises[i].exerciseGroups.items[0].groupID) {
+    for (let j = 0; j < usersettings.groups.length; j++) {
+      /* fix later */
+      if (userGroups.current[j].id === exercises[0].groupId) {
         exerciseList.push(exercises[i]);
       }
     }
   }
 
-  let unique = exerciseList.filter(onlyUnique);
+  // Make me a filter for unique values
+  const unique = exerciseList.filter(onlyUnique);
   exerciseList = unique;
 
-  userExercises.set(exerciseList);
+  return { exerciseList };
 };
-
-export const downloadFile = () => {
-  console.log("ROFL");
-}
 
 export const fadeScale = (
   node: HTMLElement,

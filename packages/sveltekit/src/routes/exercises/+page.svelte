@@ -5,12 +5,7 @@
 	import Information from '$lib/components/Information.svelte';
 	import VideoSelector from '$lib/components/VideoSelector.svelte';
 	import {
-		error,
-		user,
-		userExercises,
-		exercises,
-		usersettings,
-		messages,
+		interaction,
 		pain,
 		difficult,
 		isHalfway,
@@ -26,7 +21,7 @@
 	};
 
 	const addPauseMessage = () => {
-		messages.set([
+		interaction.current = ([
 			{
 				closeIcon: false,
 				message:
@@ -51,7 +46,7 @@
 	};
 
 	const addContinueMessage = () => {
-		messages.set([
+		interaction.current = ([
 			{
 				closeIcon: false,
 				message: "You're doing well... carry on",
@@ -61,8 +56,8 @@
 		]);
 	};
 
-	const addComplimentMessage = (type) => {
-		messages.set([
+	const addComplimentMessage = (type: string) => {
+		interaction.current = ([
 			{
 				closeIcon: false,
 				message: 'Tell us how much ' + type + " on the meter above, you'll be yourself in no time.",
@@ -73,7 +68,7 @@
 	};
 
 	const addHalfwayMessage = () => {
-		messages.set([
+		interaction.current = ([
 			{
 				closeIcon: false,
 				message: "You're half way there, continue doing this exercise for as long as you like!",
@@ -81,26 +76,26 @@
 				buttons: []
 			}
 		]);
-		isHalfway.set(false);
+		isHalfway.current = (false);
 	};
 
-	let handleResult = (e) => {
+	let handleResult = (e: CustomEvent) => {
 		if (e.detail.button === 'catchup') {
-			messages.set([]);
+			interaction.current = ([]);
 			addContinueMessage();
 		} else if (e.detail.button === 'pain') {
-			messages.set([]);
-			pain.set(true);
+			interaction.current = ([]);
+			pain.current = 0;
 			addComplimentMessage('pain');
 		} else if (e.detail.button === 'difficult') {
-			messages.set([]);
-			difficult.set(true);
+			interaction.current = ([]);
+			difficult.current = 0;
 			addComplimentMessage('difficulty');
 		}
 	};
 
 	const addCompletedMessage = () => {
-		messages.set([
+		interaction.current = ([
 			{
 				closeIcon: false,
 				message: "You did it... You completed an exercise, check out how far you've come!",
@@ -108,7 +103,9 @@
 				buttons: []
 			}
 		]);
-		isCompleted.set(false);
+
+		isCompleted.current = false;
+
 		setTimeout(() => {
 			goto('/progress');
 		}, 4000);
@@ -130,9 +127,9 @@
 
 <VideoSelector />
 <div class="information-area" in:fly={{ y: 200, duration: 2000 }} out:fade>
-	{#each $messages as message}
+	{#each interaction.current as message}
 		{#if message}
-			<Information bind:message on:buttonClicked={(e) => handleResult(e)} />
+			<Information bind:newMessage={message} on:buttonClicked={(e) => handleResult(e)} />
 		{/if}
 	{/each}
 </div>

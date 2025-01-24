@@ -2,8 +2,6 @@
 	import { onMount } from 'svelte';
 	import { isPaused, isHalfway, isCompleted } from '$lib/utils/store';
 
-	import { downloadFile } from '$lib/utils/helpers';
-
 	let videoComponent: HTMLVideoElement;
 	let time: number = $state(0);
 	let duration: number = $state(0);
@@ -33,7 +31,7 @@
 	};
 
 	const handleMouseup = (e: any) => {
-		$isPaused = false;
+		isPaused.current = false;
 		let date = new Date();
 		if ((date as any) - lastMouseDown < 300) {
 			if (paused) e.target.play();
@@ -42,18 +40,18 @@
 	};
 
 	onMount(async () => {
-		const src: string = (await downloadFile(key)) || '';
-		videoSrc = src;
+		// const src: string = (await downloadFile(key)) || '';
+		// videoSrc = src;
 	});
 
 	$effect(() => {
 		if (time > duration / 2) {
-			$isHalfway = true;
+			isHalfway.current = true;
 		}
 		if (Math.round(time) == Math.round(duration)) {
-			$isCompleted = true;
+			isCompleted.current = true;
 		}
-		paused ? ($isPaused = true) : ($isPaused = false);
+		paused ? (isPaused.current = true) : (isPaused.current = false);
 	});
 
 	let {
@@ -64,13 +62,13 @@
 	}: { key: string; width: string; height: string; autoplay: boolean } = $props();
 </script>
 
-<container>
-	<playback-animation>
+<div class="container">
+	<div class="playback-animation">
 		<svg class="playback-icons">
 			<use class="hidden" href="#play-icon" />
 			<use href="#pause" />
 		</svg>
-	</playback-animation>
+	</div>
 
 	<video
 		bind:this={videoComponent}
@@ -90,17 +88,17 @@
 	>
 		<track kind="captions" />
 	</video>
-</container>
+</div>
 
 <style>
-	container {
+	.container {
 		width: 100%;
 		height: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
-	playback-animation {
+	.playback-animation {
 		pointer-events: none;
 		position: absolute;
 		top: 50%;

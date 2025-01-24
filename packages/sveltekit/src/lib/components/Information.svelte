@@ -1,46 +1,50 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import { isEmpty } from '$lib/utils/helpers';
-	import { messages } from '$lib/utils/store';
+	import { interaction } from '$lib/utils/store';
 	import IconButton from '@smui/icon-button';
 	import Button from '@smui/button';
 
 	const dispatch = createEventDispatcher();
 
 	const handleRemoveMessage = () => {
-		$messages = [];
+		interaction.current = [];
 	};
 
 	const handleMessageTimeout = () => {
 		setTimeout(() => {
-			if (message.stayOn === false) {
-				$messages = [];
+			if (newMessage.stayOn === false) {
+				interaction.current = [];
 			}
 		}, 5000);
 	};
 
 	handleMessageTimeout();
 
-	const buttonClicked = (event: MouseEvent) =>
+	const buttonClicked = (event: string) =>
 		dispatch('buttonClicked', {
 			button: event
 		});
 
-	export let message: Message;
+	let {
+		newMessage = $bindable()
+	}: {
+		newMessage: Information
+	} = $props();
 </script>
 
 <div class="information">
 	<div class="message">
-		{#if message.closeIcon}
+		{#if newMessage.closeIcon}
 			<IconButton
 				style="padding: 0; margin: 0;"
 				class="material-icons"
 				onclick={handleRemoveMessage}>remove_circle</IconButton
 			>
 		{/if}
-		<statement>{message.message}</statement>
-		{#if !isEmpty(message.buttons)}
-			{#each message.buttons as button}
+		<statement>{newMessage.message}</statement>
+		{#if newMessage.buttons && !isEmpty(newMessage.buttons)}
+			{#each newMessage.buttons as button}
 				<Button variant="raised" onclick={() => buttonClicked(button.result)}
 					>{button.title}</Button
 				>

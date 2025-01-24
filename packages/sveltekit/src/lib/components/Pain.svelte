@@ -4,7 +4,9 @@
   import Button from "@smui/button";
 
   const handlePain = (pains: number) => {
-    pain.set(pains);
+    pain.current = pains;
+
+    // TODO: Save the pain to the database with the video ID and user ID and timestamp.
   };
 
   let { video }: { video: Exercise | undefined } = $props();

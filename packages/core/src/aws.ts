@@ -8,7 +8,6 @@ import {
   UpdateCommand,
   DeleteCommand,
 } from "@aws-sdk/lib-dynamodb";
-import { Table } from "sst/node/table";
 
 const client = new DynamoDBClient();
 const documentClient = DynamoDBDocumentClient.from(client);
@@ -18,15 +17,15 @@ export const getItem = async (TableName: string, key: {}) => {
     TableName,
     Key: key,
   };
-
+  
   const data = await documentClient.send(new GetCommand(params));
 
   return data && data.Item ? data.Item : JSON.stringify(undefined);
 };
 
-export const listItems = async () => {
+export const listItems = async (TableName: string) => {
   const command = new ScanCommand({
-    TableName: Table.Users.tableName,
+    TableName
   });
 
   const data = await documentClient.send(command);
@@ -44,7 +43,7 @@ export const createItem = async (TableName: string, item: {}, key: {}) => {
 
   if (data.$metadata.httpStatusCode === 200) {
     const params = {
-      TableName: Table.Users.tableName,
+      TableName,
       Key: key,
     };
 
@@ -56,11 +55,11 @@ export const createItem = async (TableName: string, item: {}, key: {}) => {
   }
 };
 
-export const updateItem = async (email: string) => {
+export const updateItem = async (TableName: string, id: string) => {
   const params = {
-    TableName: Table.Users.tableName,
+    TableName,
     Key: {
-      email: email,
+      id: id,
     },
   };
 
@@ -73,11 +72,11 @@ export const updateItem = async (email: string) => {
   }
 };
 
-export const deleteItem = async (email: string) => {
+export const deleteItem = async (TableName: string, id: string) => {
   const params = {
-    TableName: Table.Users.tableName,
+    TableName,
     Key: {
-      email: email,
+      id: id,
     },
   };
 

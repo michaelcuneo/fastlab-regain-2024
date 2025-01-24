@@ -8,7 +8,6 @@
 
 	$effect(() => {
 		slider = 100 - progress + '%';
-		console.log(slider);
 	});
 </script>
 

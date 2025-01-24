@@ -2,6 +2,7 @@ import { validateSession } from '$lib/utils/auth';
 import { SESSION_COOKIE_NAME } from '$lib/utils/constants';
 import { json } from '@sveltejs/kit';
 import { Api } from 'sst/node/api';
+import { Table } from 'sst/node/table';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ cookies }) => {
@@ -23,7 +24,7 @@ export const GET: RequestHandler = async ({ cookies }) => {
 
 			// If the session is valid, set the user ID in the locals.
 			if (isAuthenticated) {
-				isUser = await fetch(url + '/session/get/' + session.session.userId).then(
+				isUser = await fetch(url + '/session/get/' + Table.Sessions.tableName + '/' + session.session.userId).then(
 					(res) => res.json()
 				);
 			}
