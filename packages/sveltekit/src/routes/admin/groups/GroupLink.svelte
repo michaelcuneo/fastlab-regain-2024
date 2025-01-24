@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Card, {
     Actions,
     Content,
@@ -9,9 +9,9 @@
   import IconButton, { Icon } from "@smui/icon-button";
   import { currentGroup, currentMode, user } from '$lib/utils/store';
 
-  $: open = false;
-
-  export let group;
+  let open: boolean = $state(false);
+  
+  let { group }: { group: Group } = $props();
 </script>
 
 <Card class="card-display" style="min-width: auto;">
@@ -24,7 +24,7 @@
   >
     <Content>
       <h2>
-        {group.title}
+        {group.area}
       </h2>
     </Content>
   </PrimaryAction>

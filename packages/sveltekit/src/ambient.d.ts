@@ -27,7 +27,7 @@ type UserStats = {
 
 type Group = {
   id: string;
-  title: string;
+  area: string;
   users: User[];
   exercises: Exercise[];
   createdAt: string;

@@ -6,7 +6,11 @@ export const load = (async () => {
   const exerciseUrl = Api.regainApi.url + '/exercise/list';
   const exerciseResponse = await fetch(exerciseUrl);
 
+  const groupUrl = Api.regainApi.url + '/group/list';
+  const groupResponse = await fetch(groupUrl);
+
   return {
     exerciseData: await exerciseResponse.json(),
+    groupData: await groupResponse.json(),
   };
 }) satisfies PageServerLoad;

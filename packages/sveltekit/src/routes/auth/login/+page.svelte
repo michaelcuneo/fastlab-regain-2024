@@ -26,8 +26,8 @@
 		<Card>
 			<Content>
 				<div style="display: flex; flex-direction: column; align-items: center;">
-					<CircularProgress style="height: 32px; width: 32px;" indeterminate />
 					<p>Please wait.</p>
+					<CircularProgress style="height: 32px; width: 32px;" indeterminate />
 					<h5>
 						Sending an email to {value}
 					</h5>

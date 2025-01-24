@@ -10,7 +10,7 @@
     ><img src={Fastlab} alt={Fastlab} height="140px" width="auto" /></a
   >
   <h6>
-    v2.0.0
+    <a href="/admin">v2.0.0</a>
   </h6>
 </div>
 

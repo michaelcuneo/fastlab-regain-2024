@@ -3,13 +3,14 @@
   import LayoutGrid, { Cell } from '@smui/layout-grid';
   import Button from '@smui/button';
   import { goto } from '$app/navigation';
+  import GroupLink from './GroupLink.svelte';
 
   import { groups, currentGroup, currentMode, user } from '$lib/utils/store';
 
   onMount( async () => {
     currentGroup.current = {
       id: '',
-      title: '',
+      area: '',
       users: [],
       exercises: [],
       createdAt: '',
@@ -42,7 +43,7 @@
     <LayoutGrid>
       {#each groups.current as group}
         <Cell spanDevices={{ phone: 12, tablet: 4, desktop: 3 }}>
-          <!-- <GroupLink {group} /> -->
+          <GroupLink {group} />
         </Cell>
       {/each}
     </LayoutGrid>

@@ -23,8 +23,8 @@
 
 	let video: object = [];
 	let thumbnail: object = [];
-	let exerciseVideo = currentExercise.current.video;
-	let exerciseThumb = currentExercise.current.video;
+	let exerciseVideo = $state(currentExercise.current.video || null);
+	let exerciseThumb = $state(currentExercise.current.video || null);
 
 	let duration: number;
 
@@ -132,8 +132,8 @@
 							bind:selected={groupsSelected}
 						>
               {#snippet segment(segment)}
-                <Segment {segment}>
-                  <Label>{segment.title}</Label>
+                <Segment {segment} disabled>
+                  <Label>{segment.area}</Label>
                 </Segment>
               {/snippet}
 						</SegmentedButton>
@@ -145,7 +145,7 @@
 						>
               {#snippet segment(segment)}
                 <Segment {segment}>
-                  <Label>{segment.title}</Label>
+                  <Label>{segment.area}</Label>
                 </Segment>
               {/snippet}
 						</SegmentedButton>
