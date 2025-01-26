@@ -65,31 +65,9 @@ export function TableStack({ stack }: StackContext) {
       id: "string",
       title: "string",
       time: "string",
-      thumbnailId: "string",
+      thumbnail: "string",
       description: "string",
-      videoId: "string",
-      createdAt: "string",
-      updatedAt: "string",
-    },
-    primaryIndex: { partitionKey: "id" },
-  });
-
-  const imageTable = new Table(stack, "Images", {
-    fields: {
-      id: "string",
-      key: "string",
-      mime: "string",
-      createdAt: "string",
-      updatedAt: "string",
-    },
-    primaryIndex: { partitionKey: "id" },
-  });
-
-  const videoTable = new Table(stack, "Videos", {
-    fields: {
-      id: "string",
-      key: "string",
-      mime: "string",
+      video: "string",
       createdAt: "string",
       updatedAt: "string",
     },
@@ -125,8 +103,6 @@ export function TableStack({ stack }: StackContext) {
     groupTable,
     groupExercisesTable,
     exerciseTable,
-    imageTable,
-    videoTable,
     messageTable,
     sessionTable,
   };

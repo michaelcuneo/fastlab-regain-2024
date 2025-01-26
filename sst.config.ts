@@ -10,15 +10,15 @@ export default {
     return {
       name: "fastlab-regain-2024",
       region: "ap-southeast-2",
-      profile: "work",
+      profile: "default",
     };
   },
   stacks(app) {
     app
       .stack(ConfigStack)
       .stack(TableStack)
-      .stack(ApiStack)
       .stack(StorageStack)
+      .stack(ApiStack)
       .stack(AuthStack);
   },
 } satisfies SSTConfig;

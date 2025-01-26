@@ -5,6 +5,7 @@ import { Bucket } from "sst/node/bucket";
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
   const uploadId = event?.pathParameters?.uploadId || ("" as string);
+  console.log(uploadId);
 
   const command = new GetObjectCommand({
     Key: uploadId,

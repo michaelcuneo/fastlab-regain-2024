@@ -7,7 +7,7 @@
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import Switch from '@smui/switch';
 	import FormField from '@smui/form-field';
-	import { activeAreas, user } from '$lib/utils/store';
+	import { activeAreas, user, userGroups } from '$lib/utils/store';
 
 	let disabled: boolean = $state(false);
 	let updates: boolean = $state(true);
@@ -15,7 +15,7 @@
 	let open: boolean = $state(false);
 
 	$effect(() => {
-		user?.current.groups.map((group: any) => {
+		userGroups?.current.map((group: any) => {
 			console.log(group);
 			// Hard coded for now, but will be dynamic in the future.
 			if (group.groupID === activeAreas.current[0].id) activeAreas.current[0].status = true;

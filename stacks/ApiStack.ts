@@ -1,6 +1,7 @@
 import { StackContext, Api, use } from "sst/constructs";
 import { TableStack } from "./TableStack";
 import { ConfigStack } from "./ConfigStack";
+import { StorageStack } from "./StorageStack";
 
 export function ApiStack({ stack }: StackContext) {
   const { emailService, emailHost, emailPort, emailUser, emailAppPass } =
@@ -12,11 +13,10 @@ export function ApiStack({ stack }: StackContext) {
     groupTable,
     groupExercisesTable,
     exerciseTable,
-    imageTable,
-    videoTable,
     messageTable,
     sessionTable,
   } = use(TableStack);
+  const { bucket } = use(StorageStack);
 
   const api = new Api(stack, "regainApi", {
     cors: {
@@ -31,14 +31,13 @@ export function ApiStack({ stack }: StackContext) {
     defaults: {
       function: {
         bind: [
+          bucket,
           usersTable,
           userGroupsTable,
           statsTable,
           groupTable,
           groupExercisesTable,
           exerciseTable,
-          imageTable,
-          videoTable,
           messageTable,
           sessionTable,
           emailService,

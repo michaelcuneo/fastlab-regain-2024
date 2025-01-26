@@ -65,8 +65,6 @@ type Exercise = {
   thumbnail?: Image;
   exerciseVideoId?: string;
   exerciseThumbnailId?: string;
-  groups?: Group[];
-  video?: Video;
   createdAt: string;
   updatedAt: string;
 }

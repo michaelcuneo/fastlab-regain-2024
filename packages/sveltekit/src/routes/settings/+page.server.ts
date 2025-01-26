@@ -23,7 +23,7 @@ export const actions = {
 
     try {
       // for each body part, send a POST request to the update userGroups endpoint
-      const userUpdateURL = `${Api.regainApi.url}/user/update`;
+      const userUpdateURL = `${Api.regainApi.url}/userGroup/create`;
 
       const updateResponse = await fetch(
         userUpdateURL,
@@ -34,7 +34,6 @@ export const actions = {
             email: email,
             onboard: true,
             groups: {
-              email: email,
               head: head,
               shoulder: shoulder,
               arm: arm,

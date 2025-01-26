@@ -1,24 +1,22 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { fade, fly } from 'svelte/transition';
-	import Information from '$lib/components/Information.svelte';
-	import VideoSelector from '$lib/components/VideoSelector.svelte';
+	import LayoutGrid, { Cell } from '@smui/layout-grid';
+	import Card, { Content, Actions, PrimaryAction, Media, MediaContent } from '@smui/card';
+	import { Icon } from '@smui/icon-button';
+	import { calculateRealTime } from '$lib/utils/helpers';
+
 	import {
 		interaction,
 		pain,
 		difficult,
 		isHalfway,
-		isCompleted
+		isCompleted,
 	} from '$lib/utils/store';
 
-	const downloadUser = () => {
+	import type { PageData } from './$types';
 
-	};
-
-	const createUserExercises = () => {
-
-	};
+	let selectedVideo: Exercise | undefined = $state(undefined);
 
 	const addPauseMessage = () => {
 		interaction.current = ([
@@ -111,21 +109,58 @@
 		}, 4000);
 	};
 
-	$: halfway && addHalfwayMessage();
-	$: paused && addPauseMessage();
-	$: completed && addCompletedMessage();
+	$effect(() => {
+		selectedVideo = {
+			id: '',
+			title: '',
+			createdAt: '',
+			updatedAt: '',
+			time: 0
+		}
 
-	onMount(() => {
-		downloadUser();
-		createUserExercises();
-	});
+		halfway && addHalfwayMessage();
+		paused && addPauseMessage();
+		completed && addCompletedMessage();
+		console.log(data);
+	})
 
-	export let halfway: boolean;
-	export let paused: boolean;
-	export let completed: boolean;
+	let { data, halfway, paused, completed }: { data: PageData, halfway: boolean, paused: boolean, completed: boolean } = $props();
 </script>
 
-<VideoSelector />
+<LayoutGrid>
+	{#each data.exercises as exercise}
+		<Cell span={3}>
+			<Card style="border-radius: 16px;">
+				<PrimaryAction
+					onclick={() => {
+						selectedVideo = exercise;
+					}}
+				>
+					<Media class="card-media-16x9" aspectRatio="16x9">
+						<MediaContent>
+							<img src={exercise.image} alt={exercise.imaage} />
+						</MediaContent>
+					</Media>
+					<Content style="padding: 1rem;">
+						<subtitle>
+							<h2 class="mdc-typography--headline6">
+								{exercise.title}
+							</h2>
+							<h3 class="mdc-typography--headline3">
+								{exercise.description}
+							</h3>
+							<time>
+								{calculateRealTime(exercise.time)}<Icon class="material-icons">timer</Icon>
+							</time>
+						</subtitle>
+					</Content>
+				</PrimaryAction>
+			</Card>
+		</Cell>
+	{/each}
+</LayoutGrid>
+
+<!--
 <div class="information-area" in:fly={{ y: 200, duration: 2000 }} out:fade>
 	{#each interaction.current as message}
 		{#if message}
@@ -133,6 +168,7 @@
 		{/if}
 	{/each}
 </div>
+-->
 
 <style>
 	.information-area {
@@ -146,5 +182,10 @@
 	}
 	.information-area:nth-child(1) {
 		margin: 90px;
+	}
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 </style>
