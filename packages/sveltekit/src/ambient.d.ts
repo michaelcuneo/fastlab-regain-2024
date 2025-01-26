@@ -13,6 +13,7 @@ type User = {
   onboard: boolean;
   overallProgress: number;
   groups: Group[];
+  exercises: Exercise[];
   createdAt: string;
   updatedAt: string;
 };
@@ -36,16 +37,18 @@ type Group = {
 
 type GroupExercises = {
   id: string;
-  groupId: string;
-  exerciseId: string;
+  groupID: string;
+  exerciseID: string;
   createdAt: string;
   updatedAt: string;
 }
 
-type UserGroup = {
+type UserGroups = {
   id: string;
   userId: string;
   groupId: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 type Area = {
@@ -62,7 +65,7 @@ type Exercise = {
   thumbnail?: Image;
   exerciseVideoId?: string;
   exerciseThumbnailId?: string;
-  groupId?: string;
+  groups?: Group[];
   video?: Video;
   createdAt: string;
   updatedAt: string;
@@ -97,6 +100,13 @@ type Information = {
 type Button = {
   title: string;
   result: string;
+}
+
+type UserToken = {
+  userId: string;
+  email: string;
+  iat: number;
+  exp: number;
 }
 
 type AppSyncEvent = {

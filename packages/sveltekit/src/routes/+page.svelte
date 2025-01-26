@@ -4,11 +4,12 @@
 	import Button from '@smui/button';
 	import { goto } from '$app/navigation';
 	import Card, { Content } from '@smui/card';
-	import { exercises, groups } from '$lib/utils/store';
+	import { exercises, groupExercises, groups, user } from '$lib/utils/store';
 
 	$effect(() => {
 		exercises.current = data.exerciseData;
 		groups.current = data.groupData;
+		groupExercises.current = data.groupExerciseData;
 	});
 
 	let { data }: { data: PageData } = $props();
@@ -24,8 +25,7 @@
 			{#if data.authenticated}
 				<Button variant="raised" onclick={() => goto('/exercises')}>START TO REGAIN</Button>
 			{:else}
-				<Button variant="raised" onclick={() => goto('/auth/login')}>START TO REGAIN</Button
-				>
+				<Button variant="raised" onclick={() => goto('/auth/login')}>START TO REGAIN</Button>
 			{/if}
 		</Content>
 	</Card>

@@ -9,8 +9,21 @@ export const load = (async () => {
   const groupUrl = Api.regainApi.url + '/group/list';
   const groupResponse = await fetch(groupUrl);
 
+  const groupExerciseUrl = Api.regainApi.url + '/groupExercise/list';
+  const groupExerciseResponse = await fetch(groupExerciseUrl);
+
+  const userGroupsUrl = Api.regainApi.url + '/userGroup/list';
+  const userGroupsResponse = await fetch(userGroupsUrl);
+
+  const exercises = await exerciseResponse.json();
+  const groups = await groupResponse.json();
+  const groupExercises = await groupExerciseResponse.json();
+  const userGroups = await userGroupsResponse.json();
+
   return {
-    exerciseData: await exerciseResponse.json(),
-    groupData: await groupResponse.json(),
+    exerciseData: exercises,
+    groupData: groups,
+    groupExerciseData: groupExercises,
+    userGroupsData: userGroups
   };
 }) satisfies PageServerLoad;

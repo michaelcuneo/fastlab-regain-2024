@@ -1,5 +1,3 @@
-import { userGroups } from './store';
-
 export const calculateRealTime = (time: number | undefined) => {
   const minutes: number = Math.floor(time ? time / 60 : 0);
   const seconds: number = Math.floor(time ? time - minutes * 60 : 0);
@@ -14,13 +12,13 @@ export const isEmpty = (obj: object) => {
   return obj && Object.keys(obj).length === 0;
 };
 
+/*
 export const setupUserExercises = async (exercises: Exercise[], usersettings: User) => {
   let exerciseList: Exercise[] = [];
 
   for (let i = 0; i < exercises.length; i++) {
     for (let j = 0; j < usersettings.groups.length; j++) {
-      /* fix later */
-      if (userGroups.current[j].id === exercises[0].groupId) {
+      if (userGroups.current[j].id === exercises[0]) {
         exerciseList.push(exercises[i]);
       }
     }
@@ -32,6 +30,7 @@ export const setupUserExercises = async (exercises: Exercise[], usersettings: Us
 
   return { exerciseList };
 };
+*/
 
 export const fadeScale = (
   node: HTMLElement,

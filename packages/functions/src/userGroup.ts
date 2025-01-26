@@ -1,22 +1,17 @@
-import { APIGatewayProxyHandlerV2, APIGatewayProxyEventV2 } from "aws-lambda";
+import { APIGatewayProxyHandlerV2 } from "aws-lambda";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import {
   DynamoDBDocumentClient,
-  GetCommand,
-  PutCommand,
   ScanCommand,
-  UpdateCommand,
-  DeleteCommand,
 } from "@aws-sdk/lib-dynamodb";
 import { Table } from "sst/node/table";
 
 const client = new DynamoDBClient();
 const documentClient = DynamoDBDocumentClient.from(client);
-
 export const listHandler: APIGatewayProxyHandlerV2 = async (event) => {
   try {
     const command = new ScanCommand({
-      TableName: Table.Exercises.tableName,
+      TableName: Table.Users.tableName,
     });
 
     const data = await documentClient.send(command);

@@ -4,7 +4,7 @@
 	import Polar from '$lib/components/Polar.svelte';
 
 	let progress: number = $state(0);
-	let slider: string = $state("0%");
+	let slider: string = $state('0%');
 
 	$effect(() => {
 		slider = 100 - progress + '%';
@@ -33,7 +33,6 @@
 			<Card>
 				<Content>
 					<h5>Timed Progress</h5>
-
 				</Content>
 			</Card>
 		</Cell>
@@ -51,6 +50,6 @@
 	}
 	p {
 		margin: 1rem;
-		font-size: var(--step-2)
+		font-size: var(--step-2);
 	}
 </style>

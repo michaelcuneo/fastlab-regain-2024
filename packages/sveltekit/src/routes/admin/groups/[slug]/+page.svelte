@@ -1,21 +1,21 @@
-<script>
-  import { goto } from "$app/navigation";
-  import { v4 as uuidv4 } from "uuid";
-	import CircularProgress from "@smui/circular-progress";
-	import Button from "@smui/button";
-	import { Icon } from "@smui/icon-button";
-	import Textfield from "@smui/textfield";
-	import Dialog, { Title, Content } from "@smui/dialog";
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	import { v4 as uuidv4 } from 'uuid';
+	import CircularProgress from '@smui/circular-progress';
+	import Button from '@smui/button';
+	import { Icon } from '@smui/icon-button';
+	import Textfield from '@smui/textfield';
+	import Dialog, { Title, Content } from '@smui/dialog';
 	import { currentGroup, currentMode, user } from '$lib/utils/store';
-	import LayoutGrid, { Cell } from "@smui/layout-grid";
+	import LayoutGrid, { Cell } from '@smui/layout-grid';
 
-	let title = currentGroup.current.title || "";
-	let checkValid = false;
+	let title = currentGroup.current.area || '';
+	let checkValid: boolean = $state(false);
 
-	let open = false;
+	let open: boolean = $state(false);
 
 	const handleEdit = () => {
-		if (currentMode.current === "display") {
+		if (currentMode.current === 'display') {
 			currentMode.current = 'edit';
 		} else {
 			currentMode.current = 'display';
@@ -24,21 +24,21 @@
 
 	const handleSave = async () => {
 		open = true;
-		if (currentMode.current === "edit") {
+		if (currentMode.current === 'edit') {
 			open = false;
-			goto("/groups");
+			goto('/groups');
 
-      /*
+			/*
 			editGroup({
 				id: currentGroup.current.id,
 				area: area,
 			});
       */
-		} else if (currentMode.current === "add") {
+		} else if (currentMode.current === 'add') {
 			open = false;
-			goto("/groups");
+			goto('/groups');
 
-      /*
+			/*
 			addGroup({
 				id: uuidv4(),
 				area: area,
@@ -47,71 +47,71 @@
 		}
 	};
 
-  $effect(() => {
-		checkValid = title !== "";
-  });
+	$effect(() => {
+		checkValid = title !== '';
+	});
 </script>
 
 <svelte:head>
-	{#if currentMode.current === "display" || "edit"}
+	{#if currentMode.current === 'display' || 'edit'}
 		<title>{currentGroup.current.area}</title>
 	{/if}
-	{#if currentMode.current === "add"}
+	{#if currentMode.current === 'add'}
 		<title>New Group</title>
 	{/if}
 </svelte:head>
 
 <div class="wrap">
-  <header-panel>
-    <div></div>
-    <div>
-      {#if (user && currentMode.current === "edit") || currentMode.current === "add"}
-        <Button onclick={handleSave} disabled={!checkValid}>SAVE CHANGES</Button>
-      {/if}
-      {#if (user && currentMode.current === "display") || currentMode.current === "edit"}
-        <Button onclick={handleEdit} variant="raised">
-          {#if currentMode.current === "display"}
-            EDIT
-          {:else}
-            CANCEL
-          {/if}
-        </Button>
-      {/if}
-      {#if currentMode.current === "add" || currentMode.current === "display"}
-        <Button onclick={() => goto("/admin/groups")} variant="raised">CANCEL</Button>
-      {/if}
-    </div>
-  </header-panel>
+	<header-panel>
+		<div></div>
+		<div>
+			{#if (user && currentMode.current === 'edit') || currentMode.current === 'add'}
+				<Button onclick={handleSave} disabled={!checkValid}>SAVE CHANGES</Button>
+			{/if}
+			{#if (user && currentMode.current === 'display') || currentMode.current === 'edit'}
+				<Button onclick={handleEdit} variant="raised">
+					{#if currentMode.current === 'display'}
+						EDIT
+					{:else}
+						CANCEL
+					{/if}
+				</Button>
+			{/if}
+			{#if currentMode.current === 'add' || currentMode.current === 'display'}
+				<Button onclick={() => goto('/admin/groups')} variant="raised">CANCEL</Button>
+			{/if}
+		</div>
+	</header-panel>
 
-  <section>
-    <LayoutGrid style="width: 100%;">
-      <Cell span={12}>
-        <column>
-          <span>
-            <heading>Group Title</heading>
-            {#if currentMode.current === "add" || currentMode.current === "edit"}
-              <required>
-                <Icon class="material-icons required" on>star</Icon>
-              </required>
-            {/if}
-          </span>
-          <editor-wrap>
-            {#if currentMode.current === "display"}
-              <group-title>{currentGroup.current.area}</group-title>
-            {:else}
-              <Textfield
-                style="width: 100%;"
-                variant="filled"
-                bind:value={currentGroup.current.area}
-                label="Title"
-                required
-              />
-            {/if}
-          </editor-wrap>
-        </column>
-      </Cell>
-    </LayoutGrid>
-  </section>
+	<section>
+		<LayoutGrid style="width: 100%;">
+			<Cell span={12}>
+				<column>
+					<span>
+						<heading>Group Title</heading>
+						{#if currentMode.current === 'add' || currentMode.current === 'edit'}
+							<required>
+								<Icon class="material-icons required" on>star</Icon>
+							</required>
+						{/if}
+					</span>
+					<editor-wrap>
+						{#if currentMode.current === 'display'}
+							<group-title>{currentGroup.current.area}</group-title>
+						{:else}
+							<Textfield
+								style="width: 100%;"
+								variant="filled"
+								bind:value={currentGroup.current.area}
+								label="Title"
+								required
+							/>
+						{/if}
+					</editor-wrap>
+				</column>
+			</Cell>
+		</LayoutGrid>
+	</section>
 </div>
 
 <Dialog bind:open scrimClickAction="" escapeKeyAction="">
@@ -124,13 +124,13 @@
 </Dialog>
 
 <style>
-  .wrap {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    height: 100%;
-    width: 100vw;
-  }
+	.wrap {
+		display: flex;
+		position: relative;
+		flex-direction: column;
+		height: 100%;
+		width: 100vw;
+	}
 	header-panel {
 		display: flex;
 		position: relative;

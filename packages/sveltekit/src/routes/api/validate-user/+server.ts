@@ -1,18 +1,18 @@
 import { validateSession } from '$lib/utils/auth';
 import { SESSION_COOKIE_NAME } from '$lib/utils/constants';
 import { json } from '@sveltejs/kit';
-import { Api } from 'sst/node/api';
-import { Table } from 'sst/node/table';
+// import { Api } from 'sst/node/api';
+// import { Table } from 'sst/node/table';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ cookies }) => {
 	const sessionCookieName = SESSION_COOKIE_NAME;
 	const sessionCookie = cookies.get(sessionCookieName);
-	const url = Api.regainApi.url;
+	//	const url = Api.regainApi.url;
 
 	// Flag to indicate if the user is authenticated.
 	let isAuthenticated = false;
-	let isUser = undefined;
+	//	let isUser = undefined;
 
 	// Check if the session cookie is present.
 	if (sessionCookie) {
@@ -22,12 +22,14 @@ export const GET: RequestHandler = async ({ cookies }) => {
 			// Set the authenticated flag based on the validity of the session.
 			isAuthenticated = Boolean(session.session);
 
+			/* DOES NOT WORK YET
 			// If the session is valid, set the user ID in the locals.
 			if (isAuthenticated) {
 				isUser = await fetch(url + '/session/get/' + Table.Sessions.tableName + '/' + session.session.userId).then(
 					(res) => res.json()
 				);
 			}
+			*/
 		} catch {
 			// If the session cookie is invalid, delete the cookie.
 			cookies.delete(sessionCookieName, { path: '/' });
@@ -35,5 +37,5 @@ export const GET: RequestHandler = async ({ cookies }) => {
 	}
 
 	// Return a JSON response indicating if the user is authenticated.
-	return json({ authenticated: isAuthenticated, user: isUser });
+	return json({ authenticated: isAuthenticated, /* user: isUser */ });
 };

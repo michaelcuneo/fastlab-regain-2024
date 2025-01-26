@@ -1,42 +1,34 @@
 <script lang="ts">
-  import Dialog, { Title as DialogTitle, Content, Actions } from "@smui/dialog";
-  import Button, { Label as ButtonLabel, Icon } from "@smui/button";
-	import { goto } from "$app/navigation";
-	
-  let previousY: number = $state(0);
+	import Dialog, { Title as DialogTitle, Content, Actions } from '@smui/dialog';
+	import Button, { Label as ButtonLabel } from '@smui/button';
+
+	let previousY: number = $state(0);
 	let currentY: number = $state(0);
 	let clientHeight: number = $state(0);
-  let scrollDirection: string = $state('');
-  let offscreen: boolean = $state(false);
+	let scrollDirection: string = $state('');
+	let offscreen: boolean = $state(false);
+	let open: boolean = $state(false);
 
 	const deriveDirection = (y: number) => {
-		const direction = !previousY || previousY < y ? 'down' : 'up'
-		previousY = y
+		const direction = !previousY || previousY < y ? 'down' : 'up';
+		previousY = y;
 
-		return direction
-	}
-
-  let open: boolean = $state(false);
-
-	$effect(() => {
-		open = false;
-	});
+		return direction;
+	};
 
 	let { authenticated }: { authenticated: boolean } = $props();
 
 	$effect(() => {
-    scrollDirection = deriveDirection(currentY)
-	  offscreen = scrollDirection === 'down' && currentY > clientHeight * 4
-  });
+		open = false;
+		scrollDirection = deriveDirection(currentY);
+		offscreen = scrollDirection === 'down' && currentY > clientHeight * 4;
+	});
 </script>
 
 <svelte:window bind:scrollY={currentY} />
 
-<header
-	style="--translate-y={offscreen}"
-	bind:clientHeight
->
-  <div class="logo">
+<header style="--translate-y={offscreen}" bind:clientHeight>
+	<div class="logo">
 		<a aria-label="landing" href="/">
 			<svg
 				width="163"
@@ -60,55 +52,51 @@
 				</defs>
 			</svg>
 		</a>
-  </div>
-  <div>
-    <ul>
-      {#if !authenticated}
-        <li>
-          <a class="nav" href="/auth/login">Login</a>
-        </li>
-      {/if}
-      <li>
-        <a class="nav" href="/about">About</a>
-      </li>
-      {#if authenticated}
-      <li>
-        <a class="nav" href="/progress">Progress</a>
-      </li>
-      <li>
-        <a class="nav" href="/exercises">Exercises</a>
-      </li>
-      <li>
-        <a class="nav" href="/settings">Settings</a>
-      </li>
-      <li>
-        <a class="nav" href={null} onclick={() => open = !open}>Logout</a>
-      </li>
-      {/if}
-      <!--
+	</div>
+	<div>
+		<ul>
+			{#if !authenticated}
+				<li>
+					<a class="nav" href="/auth/login">Login</a>
+				</li>
+			{/if}
+			<li>
+				<a class="nav" href="/about">About</a>
+			</li>
+			{#if authenticated}
+				<li>
+					<a class="nav" href="/progress">Progress</a>
+				</li>
+				<li>
+					<a class="nav" href="/exercises">Exercises</a>
+				</li>
+				<li>
+					<a class="nav" href="/settings">Settings</a>
+				</li>
+				<li>
+					<a class="nav" href={null} onclick={() => (open = !open)}>Logout</a>
+				</li>
+			{/if}
+			<!--
       <li>
         <a class="nav" href="/help">Help</a>
       </li>
       -->
-    </ul>
-  </div>
+		</ul>
+	</div>
 </header>
 
-<Dialog
-	bind:open
-	aria-labelledby="default-focus-title"
-	aria-describedby="default-focus-content"
->
+<Dialog bind:open aria-labelledby="default-focus-title" aria-describedby="default-focus-content">
 	<DialogTitle id="default-focus-title">WARNING</DialogTitle>
 	<Content id="default-focus-content">
 		<p>Are you sure you want to sign out?</p>
 	</Content>
 	<Actions>
-    <form action="/auth/logout" method="POST">
-      <Button class="error-button" type="submit" variant="raised">
-        <ButtonLabel>YES, SIGN ME OUT</ButtonLabel>
-      </Button>
-    </form>
+		<form action="/auth/logout" method="POST">
+			<Button class="error-button" type="submit" variant="raised">
+				<ButtonLabel>YES, SIGN ME OUT</ButtonLabel>
+			</Button>
+		</form>
 		<Button onclick={() => (open = !open)}>
 			<ButtonLabel>NO</ButtonLabel>
 		</Button>
@@ -116,39 +104,39 @@
 </Dialog>
 
 <style lang="postcss">
-  header {
-    display: flex;
-    position: sticky;
-    top: 0;
-    padding: 0 0.5rem 0 0.5rem;
-    justify-content: space-between;
-    align-items: center;
-    transition-property: transform;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-    backdrop-filter: blur(4px); 
-    transform: translate(0, var(--translate-y));
-    height: 4rem;
-    z-index: 999;
-  }
-  .logo {
-    padding: 2rem;
-  }
-  a {
-    font-family: var(--font-family-header);
-    font-size: 1.5rem;
-    line-height: 2rem;
-    font-weight: 100;
-  }
-  ul {
-    display: flex; 
-    margin-right: 1rem;
-    list-style-type: none;
-    flex-grow: 1; 
-    gap: 1rem; 
-    align-items: center; 
-  }
-  a {
+	header {
+		display: flex;
+		position: sticky;
+		top: 0;
+		padding: 0 0.5rem 0 0.5rem;
+		justify-content: space-between;
+		align-items: center;
+		transition-property: transform;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		transition-duration: 300ms;
+		backdrop-filter: blur(4px);
+		transform: translate(0, var(--translate-y));
+		height: 4rem;
+		z-index: 999;
+	}
+	.logo {
+		padding: 2rem;
+	}
+	a {
+		font-family: var(--font-family-header);
+		font-size: 1.5rem;
+		line-height: 2rem;
+		font-weight: 100;
+	}
+	ul {
+		display: flex;
+		margin-right: 1rem;
+		list-style-type: none;
+		flex-grow: 1;
+		gap: 1rem;
+		align-items: center;
+	}
+	a {
 		display: block;
 	}
 	a.nav {
@@ -165,16 +153,16 @@
 		text-decoration: none;
 		color: var(--color-secondary);
 	}
-  @media (min-width: 768px) {
-    header {
-      padding-left: 0;
-      padding-right: 0; 
-    }
-    a {
-      margin-right: 2rem;
-    }
-    ul {
-      gap: 2rem;
-    }
-  }
+	@media (min-width: 768px) {
+		header {
+			padding-left: 0;
+			padding-right: 0;
+		}
+		a {
+			margin-right: 2rem;
+		}
+		ul {
+			gap: 2rem;
+		}
+	}
 </style>

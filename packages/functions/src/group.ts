@@ -1,16 +1,29 @@
 import { APIGatewayProxyHandlerV2, APIGatewayProxyEventV2 } from "aws-lambda";
-import { AWS } from "@fastlab-regain-2024/core/aws";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBDocumentClient,
+  GetCommand,
+  PutCommand,
+  ScanCommand,
+  UpdateCommand,
+  DeleteCommand,
+} from "@aws-sdk/lib-dynamodb";
 import { Table } from "sst/node/table";
+
+const client = new DynamoDBClient();
+const documentClient = DynamoDBDocumentClient.from(client);
 
 export const listHandler: APIGatewayProxyHandlerV2 = async (event) => {
   try {
-    const listResult = await AWS.listItems(
-      Table.Groups.tableName
-    )
+    const command = new ScanCommand({
+      TableName: Table.Groups.tableName,
+    });
+
+    const data = await documentClient.send(command);
 
     return {
       statusCode: 200,
-      body: listResult ? JSON.stringify(listResult) : JSON.stringify("Error: Groups not listed"),
+      body: data.Items ? JSON.stringify(data.Items) : JSON.stringify("Error: Users not listed"),
     }
   } catch (err) {
     return {

@@ -5,19 +5,49 @@ export const actions = {
   async removeData({ request }: { request: Request }) {
     const formData = await request.formData();
     const email = formData.get('email')?.toString();
-    
+
+    // Write this method later.
+    console.log(email);
+
+  },
+  async saveSettings({ request }: { request: Request }) {
+    const formData = await request.formData();
+    const email = formData.get('email')?.toString();
+    const head = formData.get('head')?.toString();
+    const shoulder = formData.get('shoulder')?.toString();
+    const arm = formData.get('arm')?.toString();
+    const chest = formData.get('chest')?.toString();
+    const stomach = formData.get('stomach')?.toString();
+    const legs = formData.get('legs')?.toString();
+    const hands = formData.get('hands')?.toString();
+
     try {
-      // Send a POST request to the delete user endpoint
-      const userDeleteURL = `${Api.regainApi.url}/user/update/${email}`;
-      const deleteResponse = await fetch(
-        userDeleteURL,
+      // for each body part, send a POST request to the update userGroups endpoint
+      const userUpdateURL = `${Api.regainApi.url}/user/update`;
+
+      const updateResponse = await fetch(
+        userUpdateURL,
         {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' }
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            onboard: true,
+            groups: {
+              email: email,
+              head: head,
+              shoulder: shoulder,
+              arm: arm,
+              chest: chest,
+              stomach: stomach,
+              legs: legs,
+              hands: hands
+            }
+          })
         }
       );
 
-      if (!deleteResponse.ok) {
+      if (!updateResponse.ok) {
         return {
           success: false,
           error: 'Failed to send magic link, this error has been logged with FASTlab.'
@@ -34,38 +64,5 @@ export const actions = {
         error: err
       }
     }
-  },
-  async saveSettings({ request }: { request: Request }) {
-		const formData = await request.formData();
-		const email = formData.get('email')?.toString();
-    
-    try {
-      // Send a POST request to the delete user endpoint
-      const userDeleteURL = `${Api.regainApi.url}/userGroups/delete/${email}`;
-      const deleteResponse = await fetch(
-        userDeleteURL,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' }
-        }
-      );
-
-      if (!deleteResponse.ok) {
-        return {
-          success: false,
-          error: 'Failed to send magic link, this error has been logged with FASTlab.'
-        }
-      } else {
-          return {
-            success: true,
-            error: ''
-          }
-        }
-    } catch (err) {
-      return {
-        success: false,
-        error: err
-      }
-    }
-	}
+  }
 } satisfies Actions;

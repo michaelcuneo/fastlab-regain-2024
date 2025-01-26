@@ -12,7 +12,6 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@smui/segmented-button": "^8.0.0-beta.3",
     "@tsconfig/node18": "^18.2.4",
     "aws-cdk-lib": "2.161.1",
     "constructs": "10.3.0",

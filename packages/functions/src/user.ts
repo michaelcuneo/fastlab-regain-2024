@@ -1,18 +1,29 @@
 import { APIGatewayProxyHandlerV2, APIGatewayProxyEventV2 } from "aws-lambda";
-import { AWS } from "@fastlab-regain-2024/core/aws";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBDocumentClient,
+  GetCommand,
+  PutCommand,
+  ScanCommand,
+  UpdateCommand,
+  DeleteCommand,
+} from "@aws-sdk/lib-dynamodb";
 import { Table } from "sst/node/table";
 
-export const listHandler: APIGatewayProxyHandlerV2 = async (event) => {
-  const table = JSON.parse(event?.body || "");
+const client = new DynamoDBClient();
+const documentClient = DynamoDBDocumentClient.from(client);
 
+export const listHandler: APIGatewayProxyHandlerV2 = async (event) => {
   try {
-    const listResult = await AWS.listItems(
-      table
-    )
+    const command = new ScanCommand({
+      TableName: Table.Users.tableName,
+    });
+
+    const data = await documentClient.send(command);
 
     return {
       statusCode: 200,
-      body: listResult ? JSON.stringify(listHandler) : JSON.stringify("Error: Users not listed"),
+      body: data.Items ? JSON.stringify(data.Items) : JSON.stringify("Error: Users not listed"),
     }
   } catch (err) {
     return {
@@ -28,13 +39,13 @@ export const createHandler: APIGatewayProxyHandlerV2 = async (
   const body = JSON.parse(event?.body || "");
 
   try {
-    const createResult = await AWS.createItem(
-      Table.Users.tableName,
-      body,
-      {
-        email: body.email,
-      }
-    )
+    const command = new PutCommand({
+      TableName: Table.Users.tableName,
+      Item: body,
+    });
+
+    const createResult = await documentClient.send(command);
+
     return {
       statusCode: 200,
       body: createResult ? JSON.stringify(createResult) : JSON.stringify("Error: User not created"),
@@ -50,26 +61,48 @@ export const createHandler: APIGatewayProxyHandlerV2 = async (
 export const fromEmailHandler: APIGatewayProxyHandlerV2 = async (event) => {
   const email = event?.pathParameters?.id || '';
 
-	try {
-    const user = await AWS.getItem(Table.Users.tableName, { email: email });
-   
-		return {
-			statusCode: 200,
-			body: user ? JSON.stringify(user) : JSON.stringify("Error: User doesn't exist")
-		};
-	} catch (err) {
-		return {
-			statusCode: 500,
-			body: JSON.stringify(err)
-		};
-	}
+  try {
+    const command = new GetCommand({
+      TableName: Table.Users.tableName,
+      Key: { email: email },
+    });
+
+    const user = await documentClient.send(command);
+    console.log(user);
+
+    return {
+      statusCode: 200,
+      body: user.Item ? JSON.stringify(user.Item) : JSON.stringify("Error: User doesn't exist")
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify(err)
+    };
+  }
 };
 
 export const updateHandler: APIGatewayProxyHandlerV2 = async (event: APIGatewayProxyEventV2) => {
-  const user = JSON.parse(event?.body || "");
+  const body = JSON.parse(event?.body || "");
+  console.log(body);
+
+  const params = {
+    TableName: Table.Users.tableName,
+    Key: { email: body.email },
+    UpdateExpression: "SET onboard = :onboard, groups = :groups, updatedAt = :updatedAt",
+    ExpressionAttributeValues: {
+      ":onboard": body.onboard,
+      ":groups": body.groups,
+      ":updatedAt": new Date().toISOString(),
+    }
+  };
+
+  console.log(params);
 
   try {
-    const updateResult = await AWS.updateItem(Table.Users.tableName, user);
+    const updateResult = await documentClient.send(new UpdateCommand(params));
+
+    console.log("Fucking Settings", updateResult);
 
     return {
       statusCode: 200,
@@ -84,10 +117,17 @@ export const updateHandler: APIGatewayProxyHandlerV2 = async (event: APIGatewayP
 };
 
 export const deleteHandler: APIGatewayProxyHandlerV2 = async (event: APIGatewayProxyEventV2) => {
-  const userId = JSON.parse(event?.body || "");
+  const email = JSON.parse(event?.body || "");
 
   try {
-    const deleteResult = await AWS.deleteItem(Table.Users.tableName, userId);
+    const params = {
+      TableName: Table.Users.tableName,
+      Key: {
+        email: email,
+      },
+    };
+
+    const deleteResult = await documentClient.send(new DeleteCommand(params));
 
     return {
       statusCode: 200,

@@ -6,14 +6,13 @@
 
 	let form: HTMLFormElement;
 
-	$effect(() =>{
+	$effect(() => {
 		user.current = data.user;
-	})
+	});
 
 	const redirect = () => {
-		if (form)
-			form.requestSubmit();
-	}
+		if (form) form.requestSubmit();
+	};
 
 	setTimeout(redirect, 10000);
 
