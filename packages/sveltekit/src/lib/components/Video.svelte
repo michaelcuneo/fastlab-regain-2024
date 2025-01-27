@@ -1,12 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { isPaused, isHalfway, isCompleted } from '$lib/utils/store';
 
-	let videoComponent: HTMLVideoElement;
 	let time: number = $state(0);
 	let duration: number = $state(0);
 	let paused: boolean = $state(false);
-	let videoSrc: string = $state('');
 	let showControls: boolean = true;
 	let showControlsTimeout: any;
 	let lastMouseDown: any;
@@ -20,8 +17,11 @@
 		if (e.type !== 'touchmove' && !(e.buttons & 1)) return;
 
 		const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-		const { left, right } = videoComponent.getBoundingClientRect();
-		time = (duration * (clientX - left)) / (right - left);
+		const rect = videoElement?.getBoundingClientRect();
+		if (rect) {
+			const { left, right } = rect;
+			time = (duration * (clientX - left)) / (right - left);
+		}
 	};
 
 	// we can't rely on the built-in click event, because it fires
@@ -39,11 +39,6 @@
 		}
 	};
 
-	onMount(async () => {
-		// const src: string = (await downloadFile(key)) || '';
-		// videoSrc = src;
-	});
-
 	$effect(() => {
 		if (time > duration / 2) {
 			isHalfway.current = true;
@@ -55,11 +50,12 @@
 	});
 
 	let {
-		key,
+		videoElement = $bindable(),
+		src,
 		width,
 		height,
 		autoplay
-	}: { key: string; width: string; height: string; autoplay: boolean } = $props();
+	}: { videoElement: HTMLVideoElement | undefined; src: string; width: string; height: string; autoplay: boolean } = $props();
 </script>
 
 <div class="container">
@@ -71,7 +67,7 @@
 	</div>
 
 	<video
-		bind:this={videoComponent}
+		bind:this={videoElement}
 		onmousemove={handleMove}
 		ontouchmove={handleMove}
 		onmousedown={handleMousedown}
@@ -79,11 +75,11 @@
 		bind:currentTime={time}
 		bind:duration
 		bind:paused
-		src={videoSrc}
+		{src}
 		{autoplay}
 		{width}
 		{height}
-		controls
+		controls={false}
 		loop
 	>
 		<track kind="captions" />
@@ -95,8 +91,13 @@
 		width: 100%;
 		height: 100%;
 		display: flex;
+		border-radius: 16px;
 		justify-content: center;
 		align-items: center;
+	}
+	video {
+		border-radius: 16px;
+		pointer-events: none;
 	}
 	.playback-animation {
 		pointer-events: none;

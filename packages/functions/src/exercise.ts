@@ -13,6 +13,31 @@ import { Table } from "sst/node/table";
 const client = new DynamoDBClient();
 const documentClient = DynamoDBDocumentClient.from(client);
 
+export const getHandler: APIGatewayProxyHandlerV2 = async (event) => {
+  const key = event?.pathParameters?.id || '';
+
+  try {
+    const command = new GetCommand({
+      TableName: Table.Exercises.tableName,
+      Key: {
+        id: key,
+      },
+    });
+
+    const data = await documentClient.send(command);
+
+    return {
+      statusCode: 200,
+      body: data.Item ? JSON.stringify(data.Item) : JSON.stringify("Error: Exercise not found"),
+    }
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify(err)
+    }
+  }
+}
+
 export const createHandler: APIGatewayProxyHandlerV2 = async (event) => {
   const body = JSON.parse(event.body || "{}");
 

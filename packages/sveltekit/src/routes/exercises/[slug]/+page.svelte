@@ -1,75 +1,66 @@
 <script lang="ts">
-  import { fly } from 'svelte/transition';
+  import { goto } from '$app/navigation';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
-	import { Icon } from '@smui/common';
 	import { difficult, pain } from '$lib/utils/store';
 	import { calculateRealTime } from '$lib/utils/helpers';
-  import Information from '$lib/components/Information.svelte';
-  import Difficulty from './Difficulty.svelte';
-	import Pain from './Pain.svelte';
+  import Video from '$lib/components/Video.svelte';
+	import Messages from './Messages.svelte';
+  import Controls from './Controls.svelte';
+	import Guage from './Guage.svelte';
+  import type { PageData } from '../$types';
 
-  let { selectedVideo }: { selectedVideo: Exercise } = $props();
+  let videoElement: HTMLVideoElement | undefined = $state();
+
+  let { data }: { data: PageData } = $props();
 </script>
 
-<LayoutGrid>
-  <Cell span={8}>
-    <!--<S3Video key={selectedVideo?.video?.key} width="100%" height="100%" autoplay={true} />-->
-  </Cell>
-  <Cell span={4}>
-    {#if difficult.current}
-      <Difficulty video={selectedVideo} />
-    {/if}
-    {#if pain.current}
-      <Pain video={selectedVideo} />
-    {/if}
-    <Card style="border-radius: 16px;">
-      <h2 class="mdc-typography--headline6" style="margin: 1em;">
-        {selectedVideo?.title}
-        {calculateRealTime(selectedVideo?.time)}
-      </h2>
-      <Content>
-        <p>{selectedVideo?.description}</p>
-      </Content>
-      <Actions fullBleed>
-        <Button
-          onclick={() =>
-            (selectedVideo = {
-              id: '',
-              title: '',
-              createdAt: '',
-              updatedAt: '',
-              time: 0
-            })}
-        >
-          <i class="material-icons" aria-hidden="true">arrow_backward</i>
-          <Label>Return to the video selection screen</Label>
-        </Button>
-      </Actions>
-    </Card>
-  </Cell>
-</LayoutGrid>
-
-<div class="information-area" in:fly={{ y: 200, duration: 2000 }} out:fade>
-	{#each interaction.current as message}
-		{#if message}
-			<Information bind:newMessage={message} on:buttonClicked={(e) => handleResult(e)} />
-		{/if}
-	{/each}
+<div class="exercise">
+  <LayoutGrid>
+    <Cell span={8}>
+      <Video bind:videoElement={videoElement} src={data?.exercises.video} width="100%" height="100%" autoplay />
+    </Cell>
+    <Cell span={4}>
+      <Card style="border-radius: 16px;">
+        <Content>
+          <h3 class="mdc-typography--headline6">
+            {data?.exercises?.title}
+            {calculateRealTime(data?.exercises?.time)}
+          </h3>
+          <p>{data?.exercises?.description}</p>
+        </Content>
+        <Actions fullBleed>
+          <Button onclick={() => goto(`/exercises`)} >
+            <i class="material-icons" aria-hidden="true">arrow_backward</i>
+            <Label>Return to the video selection screen</Label>
+          </Button>
+        </Actions>
+      </Card>
+      <div class="guage">
+        <Controls videoElement={videoElement} />
+      </div>
+      {#if difficult.current || pain.current}
+        <div class="guage">
+          <Guage video={data?.exercises} type={pain.current ? "pain" : "difficult"} />
+        </div>
+      {/if}
+    </Cell>
+  </LayoutGrid>
+  <Messages />
 </div>
 
 <style>
-	.information-area {
-		position: absolute;
+	.exercise {
+		display: flex;
+		position: relative;
+    flex-direction: column;
+		align-items: center;
+		height: 100%;
 		background: rgba(255, 255, 255, 0.1);
-		margin-top: 90px;
-		bottom: 13px;
-		left: 13px;
-		right: 23px;
-		flex-direction: column;
+		z-index: 0;
 	}
-	.information-area:nth-child(1) {
-		margin: 90px;
-	}
+  .guage {
+    margin-top: 1em;
+  }
 </style>

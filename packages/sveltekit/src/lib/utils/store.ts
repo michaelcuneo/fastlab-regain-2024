@@ -1,13 +1,13 @@
 import { PersistedState } from 'runed';
 
 // Information Messages
-export const interaction = new PersistedState<Information[]>('interaction', [], { storage: 'session' });
+export const interaction = new PersistedState<Information[] | undefined>('interaction', [], { storage: 'session' });
 
 // Active Areas.
 export const activeAreas = new PersistedState<Area[]>(
 	'activeAreas',
 	[
-		{
+		{	
 			id: 'e536c320-1e5e-4be1-96c4-620e34b0bce0',
 			name: 'Head',
 			status: false
@@ -52,8 +52,8 @@ export const isHalfway = new PersistedState<boolean>('isHalfway', false, { stora
 export const isCompleted = new PersistedState<boolean>('isCompleted', false, { storage: 'session' });
 
 // User Difficulty and Pain
-export const pain = new PersistedState<number>('pain', 0, { storage: 'session' });
-export const difficult = new PersistedState<number>('difficult', 0, { storage: 'session' });
+export const pain = new PersistedState<boolean>('pain', false, { storage: 'session' });
+export const difficult = new PersistedState<boolean>('difficult', false, { storage: 'session' });
 
 // User Store.
 export const user = new PersistedState<User>('user', { id: '', email: '', createdAt: '', updatedAt: '', onboard: false, overallProgress: 0, groups: [], exercises: [] }, { storage: 'local' });
@@ -67,6 +67,6 @@ export const error = new PersistedState<{ status: boolean, message: string }>('e
 
 // Admin stuff.
 export const currentGroup = new PersistedState<Group>('currentGroup', { id: '', area: '', users: [], exercises: [], createdAt: '', updatedAt: '' }, { storage: 'session' });
-export const currentExercise = new PersistedState<Exercise>('currentExercise', { id: '', title: '', time: 0, createdAt: '', updatedAt: '' }, { storage: 'session' });
+export const currentExercise = new PersistedState<Exercise>('currentExercise', { id: '', title: '', time: 0, createdAt: '', updatedAt: '', imageKey: '', videoKey: '' }, { storage: 'session' });
 export const currentUser = new PersistedState<User>('currentUser', { id: '', email: '', createdAt: '', updatedAt: '', onboard: false, overallProgress: 0, groups: [], exercises: [] }, { storage: 'session' });
 export const currentMode = new PersistedState<string>('currentMode', 'display', { storage: 'session' });

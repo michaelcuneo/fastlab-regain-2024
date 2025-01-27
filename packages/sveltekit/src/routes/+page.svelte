@@ -4,11 +4,9 @@
 	import Button from '@smui/button';
 	import { goto } from '$app/navigation';
 	import Card, { Content } from '@smui/card';
-	import { exercises, groupExercises, groups, user } from '$lib/utils/store';
+	import { groupExercises } from '$lib/utils/store';
 
 	$effect(() => {
-		exercises.current = data.exerciseData;
-		groups.current = data.groupData;
 		groupExercises.current = data.groupExerciseData;
 	});
 
@@ -42,5 +40,10 @@
 		background-repeat: no-repeat;
 		background-size: cover;
 		justify-content: end;
+	}
+	@media (max-width: 600px) {
+		.welcome {
+			padding: 5rem;
+		}
 	}
 </style>

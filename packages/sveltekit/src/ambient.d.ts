@@ -62,9 +62,10 @@ type Exercise = {
   title: string;
   time: number;
   description?: string;
-  thumbnail?: Image;
-  exerciseVideoId?: string;
-  exerciseThumbnailId?: string;
+  imageKey: string;
+  videoKey: string;
+  image?: string;
+  video?: string;
   createdAt: string;
   updatedAt: string;
 }
