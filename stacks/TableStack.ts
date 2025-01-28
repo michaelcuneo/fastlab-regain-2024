@@ -96,6 +96,17 @@ export function TableStack({ stack }: StackContext) {
     primaryIndex: { partitionKey: "id" },
   });
 
+  stack.addOutputs({
+    UsersTableName: usersTable.tableName,
+    UserGroupsTableName: userGroupsTable.tableName,
+    StatsTableName: statsTable.tableName,
+    GroupTableName: groupTable.tableName,
+    GroupExercisesTableName: groupExercisesTable.tableName,
+    ExerciseTableName: exerciseTable.tableName,
+    MessageTableName: messageTable.tableName,
+    SessionTableName: sessionTable.tableName,
+  });
+
   return {
     usersTable,
     userGroupsTable,

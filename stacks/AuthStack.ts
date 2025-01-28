@@ -17,5 +17,9 @@ export function AuthStack({ stack }: StackContext) {
   // Attach the authenticator to the stack
   auth.attach(stack, { api });
 
+  stack.addOutputs({
+    AuthApiEndpoint: api.url,
+  });
+
   return { auth };
 }

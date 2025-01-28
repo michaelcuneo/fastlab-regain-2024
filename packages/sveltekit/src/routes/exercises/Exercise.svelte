@@ -1,39 +1,51 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-  import { calculateRealTime } from '$lib/utils/calculateRealTime';
+	import { calculateRealTime } from '$lib/utils/calculateRealTime';
 	import { lazyLoad } from '$lib/utils/lazyload';
-	import Card, { PrimaryAction, Media, MediaContent, Content } from '@smui/card'
+	import Card, { PrimaryAction, Media, MediaContent, Content } from '@smui/card';
 	import { Icon } from '@smui/common';
 	import { Cell } from '@smui/layout-grid';
 
 	let loaded: boolean = $state(false);
+	let submitting: boolean = $state(false);
 	let form: HTMLFormElement;
-	let action: { success: boolean, key: string } = $state({ success: false, key: '' });
+	let action: { success: boolean; key: string } = $state({ success: false, key: '' });
 
 	$effect(() => {
-		form.addEventListener('submit', (e) => {
-			console.log('submitting form');
-			e.preventDefault();
-		}, { once: true });
+		form.addEventListener(
+			'submit',
+			(e) => {
+				console.log('submitting form');
+				e.preventDefault();
+			},
+			{ once: true }
+		);
 	});
 
 	let { exercise }: { exercise: Exercise } = $props();
 </script>
 
-<form style="display: none;" bind:this={form} method="POST" action="?/getKey" use:enhance={({ cancel }) => {
-	if (loaded) cancel();
-	return async ({ result }: { result: any }) => {
-		if (result.data.url) {
-			action = { success: result.status === 200, key: result.data.url }
-			loaded = true;
-		}
-	}
-}}>
+<form
+	style="display: none;"
+	bind:this={form}
+	method="POST"
+	action="?/getKey"
+	use:enhance={({ cancel }) => {
+		if (loaded || submitting) cancel();
+		return async ({ result }: { result: any }) => {
+			submitting = false;
+			if (result.data.url) {
+				action = { success: result.status === 200, key: result.data.url };
+				loaded = true;
+			}
+		};
+	}}
+>
 	<input type="hidden" name="key" value={exercise.imageKey} />
 </form>
-  
-<Cell span={ 3 }>
+
+<Cell span={3}>
 	<Card style="border-radius: 16px; height: 100%;">
 		<PrimaryAction
 			onclick={() => {
@@ -42,10 +54,13 @@
 		>
 			<Media class="card-media-16x9" aspectRatio="16x9">
 				<MediaContent>
-					<div use:lazyLoad onisVisible={() => {
-						if (loaded) return;
-						form.requestSubmit();
-					}}>
+					<div
+						use:lazyLoad
+						onisVisible={() => {
+							if (loaded) return;
+							form.requestSubmit();
+						}}
+					>
 						{#if action.success === true}
 							<img src={action.key} alt="Video Thumbnail" loading="lazy" />
 						{:else}
@@ -78,10 +93,10 @@
 		object-fit: cover;
 	}
 	.time {
-    display: flex;
-    width: 80px;
-    justify-content: space-between;
-    align-items: center;
+		display: flex;
+		width: 80px;
+		justify-content: space-between;
+		align-items: center;
 	}
 	.subtitle {
 		display: flex;
@@ -98,11 +113,12 @@
 		animation: pulse 2s infinite;
 	}
 	@keyframes pulse {
-	  0%, 100% {
-    	background-color: hsl(0, 0%, 95%);
-  	}
-  	50% {
-	    background-color: hsl(0, 0%, 90%);
-	  }
+		0%,
+		100% {
+			background-color: hsl(0, 0%, 95%);
+		}
+		50% {
+			background-color: hsl(0, 0%, 90%);
+		}
 	}
 </style>

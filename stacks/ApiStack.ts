@@ -23,10 +23,7 @@ export function ApiStack({ stack }: StackContext) {
       allowCredentials: true,
       allowHeaders: ["content-type"],
       allowMethods: ["ANY"],
-      allowOrigins: [
-        `http://localhost:3000`,
-        `https://regain.soci.org.au`,
-      ],
+      allowOrigins: [`http://localhost:3000`, `https://regain.soci.org.au`],
     },
     defaults: {
       function: {
@@ -57,7 +54,8 @@ export function ApiStack({ stack }: StackContext) {
       "POST /exercise/create": "packages/functions/src/exercise.createHandler",
       "GET /exercise/get/{id}": "packages/functions/src/exercise.getHandler",
       "PUT /exercise/update": "packages/functions/src/exercise.updateHandler",
-      "DELETE /exercise/delete": "packages/functions/src/exercise.deleteHandler",
+      "DELETE /exercise/delete":
+        "packages/functions/src/exercise.deleteHandler",
       // Groups
       "GET /group/list": "packages/functions/src/group.listHandler",
       "POST /group/create": "packages/functions/src/group.createHandler",
@@ -65,26 +63,16 @@ export function ApiStack({ stack }: StackContext) {
       "PUT /group/update": "packages/functions/src/group.updateHandler",
       "DELETE /group/delete": "packages/functions/src/group.deleteHandler",
       // Group Exercises
-      "GET /groupExercise/list": "packages/functions/src/groupExercise.listHandler",
+      "GET /groupExercise/list":
+        "packages/functions/src/groupExercise.listHandler",
       "POST /groupExercise/create":
         "packages/functions/src/groupExercise.createHandler",
-      "GET /groupExercise/get/{id}": "packages/functions/src/groupExercise.getHandler",
+      "GET /groupExercise/get/{id}":
+        "packages/functions/src/groupExercise.getHandler",
       "PUT /groupExercise/update":
         "packages/functions/src/groupExercise.updateHandler",
       "DELETE /groupExercise/delete":
         "packages/functions/src/groupExercise.deleteHandler",
-      // Images
-      "GET /image/list": "packages/functions/src/image.listHandler",
-      "POST /image/create": "packages/functions/src/image.createHandler",
-      "GET /image/get/{id}": "packages/functions/src/image.getHandler",
-      "PUT /image/update": "packages/functions/src/image.updateHandler",
-      "DELETE /image/delete": "packages/functions/src/image.deleteHandler",
-      // Videos
-      "GET /video/list": "packages/functions/src/video.listHandler",
-      "POST /video/create": "packages/functions/src/video.createHandler",
-      "GET /video/get/{id}": "packages/functions/src/video.getHandler",
-      "PUT /video/update": "packages/functions/src/video.updateHandler",
-      "DELETE /video/delete": "packages/functions/src/video.deleteHandler",
       // Stats
       "GET /stat/list": "packages/functions/src/stat.listHandler",
       "POST /stat/create": "packages/functions/src/stat.createHandler",
@@ -106,10 +94,12 @@ export function ApiStack({ stack }: StackContext) {
       "DELETE /user/delete": "packages/functions/src/user.deleteHandler",
       // User Groups
       "GET /userGroup/list": "packages/functions/src/userGroup.listHandler",
-      "POST /userGroup/create": "packages/functions/src/userGroup.createHandler",
+      "POST /userGroup/create":
+        "packages/functions/src/userGroup.createHandler",
       "GET /userGroup/get/{id}": "packages/functions/src/userGroup.getHandler",
       "PUT /userGroup/update": "packages/functions/src/userGroup.updateHandler",
-      "DELETE /userGroup/delete": "packages/functions/src/userGroup.deleteHandler",
+      "DELETE /userGroup/delete":
+        "packages/functions/src/userGroup.deleteHandler",
       // Sessions
       "GET /session/list": "packages/functions/src/session.listHandler",
       "POST /session/create": "packages/functions/src/session.createHandler",
@@ -125,7 +115,6 @@ export function ApiStack({ stack }: StackContext) {
   // API OUTPUTS
   stack.addOutputs({
     ApiEndpoint: api.url,
-    ApiId: api.id,
   });
 
   return { api };
