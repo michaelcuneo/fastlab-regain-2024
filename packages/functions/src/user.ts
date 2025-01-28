@@ -23,13 +23,15 @@ export const listHandler: APIGatewayProxyHandlerV2 = async (event) => {
 
     return {
       statusCode: 200,
-      body: data.Items ? JSON.stringify(data.Items) : JSON.stringify("Error: Users not listed"),
-    }
+      body: data.Items
+        ? JSON.stringify(data.Items)
+        : JSON.stringify("Error: Users not listed"),
+    };
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify(err)
-    }
+      body: JSON.stringify(err),
+    };
   }
 };
 
@@ -48,7 +50,9 @@ export const createHandler: APIGatewayProxyHandlerV2 = async (
 
     return {
       statusCode: 200,
-      body: createResult ? JSON.stringify(createResult) : JSON.stringify("Error: User not created"),
+      body: createResult
+        ? JSON.stringify(createResult)
+        : JSON.stringify("Error: User not created"),
     };
   } catch (err) {
     return {
@@ -59,7 +63,7 @@ export const createHandler: APIGatewayProxyHandlerV2 = async (
 };
 
 export const fromEmailHandler: APIGatewayProxyHandlerV2 = async (event) => {
-  const email = event?.pathParameters?.id || '';
+  const email = event?.pathParameters?.id || "";
 
   try {
     const command = new GetCommand({
@@ -68,33 +72,37 @@ export const fromEmailHandler: APIGatewayProxyHandlerV2 = async (event) => {
     });
 
     const user = await documentClient.send(command);
-    console.log(user);
 
     return {
       statusCode: 200,
-      body: user.Item ? JSON.stringify(user.Item) : JSON.stringify("Error: User doesn't exist")
+      body: user.Item
+        ? JSON.stringify(user.Item)
+        : JSON.stringify("Error: User doesn't exist"),
     };
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify(err)
+      body: JSON.stringify(err),
     };
   }
 };
 
-export const updateHandler: APIGatewayProxyHandlerV2 = async (event: APIGatewayProxyEventV2) => {
+export const updateHandler: APIGatewayProxyHandlerV2 = async (
+  event: APIGatewayProxyEventV2
+) => {
   const body = JSON.parse(event?.body || "");
   console.log(body);
 
   const params = {
     TableName: Table.Users.tableName,
     Key: { email: body.email },
-    UpdateExpression: "SET onboard = :onboard, groups = :groups, updatedAt = :updatedAt",
+    UpdateExpression:
+      "SET onboard = :onboard, groups = :groups, updatedAt = :updatedAt",
     ExpressionAttributeValues: {
       ":onboard": body.onboard,
       ":groups": body.groups,
       ":updatedAt": new Date().toISOString(),
-    }
+    },
   };
 
   console.log(params);
@@ -106,7 +114,9 @@ export const updateHandler: APIGatewayProxyHandlerV2 = async (event: APIGatewayP
 
     return {
       statusCode: 200,
-      body: updateResult ? JSON.stringify(updateResult) : JSON.stringify("Error: User not updated"),
+      body: updateResult
+        ? JSON.stringify(updateResult)
+        : JSON.stringify("Error: User not updated"),
     };
   } catch (err) {
     return {
@@ -116,7 +126,9 @@ export const updateHandler: APIGatewayProxyHandlerV2 = async (event: APIGatewayP
   }
 };
 
-export const deleteHandler: APIGatewayProxyHandlerV2 = async (event: APIGatewayProxyEventV2) => {
+export const deleteHandler: APIGatewayProxyHandlerV2 = async (
+  event: APIGatewayProxyEventV2
+) => {
   const email = JSON.parse(event?.body || "");
 
   try {
@@ -131,7 +143,9 @@ export const deleteHandler: APIGatewayProxyHandlerV2 = async (event: APIGatewayP
 
     return {
       statusCode: 200,
-      body: deleteResult ? JSON.stringify(deleteResult) : JSON.stringify("Data not deleted"),
+      body: deleteResult
+        ? JSON.stringify(deleteResult)
+        : JSON.stringify("Data not deleted"),
     };
   } catch (err) {
     return {

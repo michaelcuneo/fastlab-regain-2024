@@ -22,12 +22,14 @@ export const listHandler: APIGatewayProxyHandlerV2 = async (event) => {
 
     return {
       statusCode: 200,
-      body: data.Items ? JSON.stringify(data.Items) : JSON.stringify("Error: Users not listed"),
-    }
+      body: data.Items
+        ? JSON.stringify(data.Items)
+        : JSON.stringify("Error: Users not listed"),
+    };
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify(err)
-    }
+      body: JSON.stringify(err),
+    };
   }
 };

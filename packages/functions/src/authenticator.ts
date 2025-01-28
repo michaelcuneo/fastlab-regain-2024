@@ -4,10 +4,7 @@ import { mailer } from "@fastlab-regain-2024/core/nodemailer";
 import jwt from "jsonwebtoken";
 import { Table } from "sst/node/table";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import {
-  DynamoDBDocumentClient,
-  GetCommand,
-} from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
 
 const client = new DynamoDBClient();
 const documentClient = DynamoDBDocumentClient.from(client);
@@ -58,9 +55,13 @@ export const handler = AuthHandler({
           };
         }
 
-        const token = jwt.sign({ userId: user && user.id, email: user && user.email }, Config.JWT_SECRET, {
-          expiresIn: "1m",
-        });
+        const token = jwt.sign(
+          { userId: user && user.id, email: user && user.email },
+          Config.JWT_SECRET,
+          {
+            expiresIn: "3m",
+          }
+        );
 
         return {
           statusCode: 302,

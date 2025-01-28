@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fade, fly } from 'svelte/transition';
   import { goto } from '$app/navigation';
-  import { isEmpty } from '$lib/utils/helpers';
+  import { isEmpty } from '$lib/utils/setupUserExercises';
 	import IconButton from '@smui/icon-button';
 	import Button from '@smui/button';
 
@@ -95,20 +95,20 @@
 
   let handleResult = (e: string) => {
 		if (e === 'help') {
-		  interaction.current = undefined;
+		  interaction.current = null;
 			goto('/help');
     } else if (e === 'technical') {
-  	  interaction.current = undefined;
+		  interaction.current = null;
       addTechnicalMessage();
     } else if (e === 'catchup') {
-  	  interaction.current = undefined;
+		  interaction.current = null;
 			addContinueMessage();
 		} else if (e === 'pain') {
-  	  interaction.current = undefined;
+		  interaction.current = null;
 			pain.current = true;
 			addComplimentMessage('pain');
 		} else if (e === 'difficult') {
-  	  interaction.current = undefined;
+		  interaction.current = null;
 			difficult.current = true;
 			addComplimentMessage('difficulty');
 		}
@@ -132,14 +132,14 @@
 	};
 
   const handleRemoveMessage = () => {
-  	interaction.current = undefined;
+		  interaction.current = null;
 	};
 
   const handleMessageTimeout = () => {
 		setTimeout(() => {
       if (interaction?.current) {
 			  if (interaction?.current[0]?.stayOn === false) {
-  				interaction.current = undefined;
+		  		interaction.current = null;
 			  }
       }
 		}, 5000);

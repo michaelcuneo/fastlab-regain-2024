@@ -1,22 +1,40 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-  import { calculateRealTime } from '$lib/utils/helpers';
+  import { calculateRealTime } from '$lib/utils/calculateRealTime';
 	import { lazyLoad } from '$lib/utils/lazyload';
 	import Card, { PrimaryAction, Media, MediaContent, Content } from '@smui/card'
-	import CircularProgress from '@smui/circular-progress';
 	import { Icon } from '@smui/common';
 	import { Cell } from '@smui/layout-grid';
 
-	let load: boolean = $state(false);
+	let loaded: boolean = $state(false);
 	let form: HTMLFormElement;
 	let action: { success: boolean, key: string } = $state({ success: false, key: '' });
 
+	$effect(() => {
+		form.addEventListener('submit', (e) => {
+			console.log('submitting form');
+			e.preventDefault();
+		}, { once: true });
+	});
+
 	let { exercise }: { exercise: Exercise } = $props();
 </script>
+
+<form style="display: none;" bind:this={form} method="POST" action="?/getKey" use:enhance={({ cancel }) => {
+	if (loaded) cancel();
+	return async ({ result }: { result: any }) => {
+		if (result.data.url) {
+			action = { success: result.status === 200, key: result.data.url }
+			loaded = true;
+		}
+	}
+}}>
+	<input type="hidden" name="key" value={exercise.imageKey} />
+</form>
   
 <Cell span={ 3 }>
-	<Card style="border-radius: 16px;">
+	<Card style="border-radius: 16px; height: 100%;">
 		<PrimaryAction
 			onclick={() => {
 				goto(`/exercises/${exercise.id}`);
@@ -25,24 +43,13 @@
 			<Media class="card-media-16x9" aspectRatio="16x9">
 				<MediaContent>
 					<div use:lazyLoad onisVisible={() => {
+						if (loaded) return;
 						form.requestSubmit();
-						load = true;
 					}}>
-						<form bind:this={form} method="POST" action="?/getKey" use:enhance={({ cancel }) => {
-							if (action.success) {
-								cancel();
-							};
-							return async ({ result }: { result: any }) => {
-								if (result.data.url) {
-									action = { success: result.status === 200, key: result.data.url }
-								}
-							}
-						}}>
-						<input type="hidden" name="key" value={exercise.imageKey} />
 						{#if action.success === true}
 							<img src={action.key} alt="Video Thumbnail" loading="lazy" />
 						{:else}
-							<div class="loader">{action.key}</div>
+							<div class="loader"></div>
 						{/if}
 					</div>
 				</MediaContent>

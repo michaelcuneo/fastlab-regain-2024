@@ -205,7 +205,7 @@
 						</div>
 					</div>
 					<div class="legend">
-						<p>When you are happy with your selections, continue to the exercises, you must pick at least one area to continue. We will give you exercises based on your selection.</p>
+						<h4>You must pick at least one area to continue.</h4>
 						<Button type="submit" {disabled} variant="raised" onclick={() => goto('/exercises')}>Show me my exercises</Button>
 					</div>
 					<!--

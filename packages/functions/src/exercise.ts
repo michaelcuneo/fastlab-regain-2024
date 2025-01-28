@@ -14,7 +14,7 @@ const client = new DynamoDBClient();
 const documentClient = DynamoDBDocumentClient.from(client);
 
 export const getHandler: APIGatewayProxyHandlerV2 = async (event) => {
-  const key = event?.pathParameters?.id || '';
+  const key = event?.pathParameters?.id || "";
 
   try {
     const command = new GetCommand({
@@ -28,15 +28,17 @@ export const getHandler: APIGatewayProxyHandlerV2 = async (event) => {
 
     return {
       statusCode: 200,
-      body: data.Item ? JSON.stringify(data.Item) : JSON.stringify("Error: Exercise not found"),
-    }
+      body: data.Item
+        ? JSON.stringify(data.Item)
+        : JSON.stringify("Error: Exercise not found"),
+    };
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify(err)
-    }
+      body: JSON.stringify(err),
+    };
   }
-}
+};
 
 export const createHandler: APIGatewayProxyHandlerV2 = async (event) => {
   const body = JSON.parse(event.body || "{}");
@@ -51,15 +53,17 @@ export const createHandler: APIGatewayProxyHandlerV2 = async (event) => {
 
     return {
       statusCode: 200,
-      body: data.Attributes ? JSON.stringify(data.Attributes) : JSON.stringify("Error: Exercise not created"),
-    }
+      body: data.Attributes
+        ? JSON.stringify(data.Attributes)
+        : JSON.stringify("Error: Exercise not created"),
+    };
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify(err)
-    }
+      body: JSON.stringify(err),
+    };
   }
-}
+};
 
 export const listHandler: APIGatewayProxyHandlerV2 = async (event) => {
   try {
@@ -71,13 +75,15 @@ export const listHandler: APIGatewayProxyHandlerV2 = async (event) => {
 
     return {
       statusCode: 200,
-      body: data.Items ? JSON.stringify(data.Items) : JSON.stringify("Error: Exercises not listed"),
-    }
+      body: data.Items
+        ? JSON.stringify(data.Items)
+        : JSON.stringify("Error: Exercises not listed"),
+    };
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify(err)
-    }
+      body: JSON.stringify(err),
+    };
   }
 };
 
@@ -90,7 +96,8 @@ export const updateHandler: APIGatewayProxyHandlerV2 = async (event) => {
       Key: {
         id: body.id,
       },
-      UpdateExpression: "SET #title = :title, #time = :time, #description = :description, #thumbnailId = :thumbnailId, #videoId = :videoId, #updatedAt = :updatedAt",
+      UpdateExpression:
+        "SET #title = :title, #time = :time, #description = :description, #thumbnailId = :thumbnailId, #videoId = :videoId, #updatedAt = :updatedAt",
       ExpressionAttributeNames: {
         "#title": "title",
         "#time": "time",
@@ -113,15 +120,17 @@ export const updateHandler: APIGatewayProxyHandlerV2 = async (event) => {
 
     return {
       statusCode: 200,
-      body: data.Attributes ? JSON.stringify(data.Attributes) : JSON.stringify("Error: Exercise not updated"),
-    }
+      body: data.Attributes
+        ? JSON.stringify(data.Attributes)
+        : JSON.stringify("Error: Exercise not updated"),
+    };
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify(err)
-    }
+      body: JSON.stringify(err),
+    };
   }
-}
+};
 
 export const deleteHandler: APIGatewayProxyHandlerV2 = async (event) => {
   const body = JSON.parse(event.body || "{}");
@@ -138,12 +147,14 @@ export const deleteHandler: APIGatewayProxyHandlerV2 = async (event) => {
 
     return {
       statusCode: 200,
-      body: data.Attributes ? JSON.stringify(data.Attributes) : JSON.stringify("Error: Exercise not deleted"),
-    }
+      body: data.Attributes
+        ? JSON.stringify(data.Attributes)
+        : JSON.stringify("Error: Exercise not deleted"),
+    };
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify(err)
-    }
+      body: JSON.stringify(err),
+    };
   }
-}
+};
