@@ -8,7 +8,10 @@
 		><img src={Fastlab} alt={Fastlab} height="140px" width="auto" /></a
 	>
 	<h6>
-		<a href="/admin">v2.0.0</a>
+		<a href="/admin">v2.0.0 | </a>
+		<a href="/tos">Terms of Service | </a>
+		<a href="/privacy">Privacy Policy | </a>
+		<a href="/contact">Contact</a>
 	</h6>
 </div>
 
@@ -27,6 +30,9 @@
 	a {
 		text-decoration: none;
 		height: 140px;
+	}
+	a:visited {
+		color: var(--color-surface);
 	}
 	h6 {
 		padding-top: 12px;

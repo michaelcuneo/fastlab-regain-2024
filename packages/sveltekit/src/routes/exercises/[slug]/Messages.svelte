@@ -47,9 +47,14 @@
     interaction.current = ([
       {
         closeIcon: false,
-        message: 'We understand, technical issues can be frustrating. Please go to the help page and report the issue.',
+        message: "We understand, technical issues can be frustrating. Please go to the help page and report the issue.",
         stayOn: false,
-        buttons: []
+        buttons: [
+					{
+						title: 'Help',
+						result: 'help'
+					}
+				]
       }
     ]);
   };
@@ -89,7 +94,10 @@
 	};
 
   let handleResult = (e: string) => {
-    if (e === 'technical') {
+		if (e === 'help') {
+		  interaction.current = undefined;
+			goto('/help');
+    } else if (e === 'technical') {
   	  interaction.current = undefined;
       addTechnicalMessage();
     } else if (e === 'catchup') {

@@ -10,8 +10,6 @@
 	import { currentExercise, currentMode, user, groups } from '$lib/utils/store';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	// import FilePond from "../../components/FilePond.svelte";
-	import S3Image from '$lib/components/S3Image.svelte';
-	import S3Video from '$lib/components/Videosvelte';
 
 	let title: string = $state(currentExercise.current.title || '');
 	let description: string = $state(currentExercise.current.description || '');

@@ -8,6 +8,7 @@
 	import Switch from '@smui/switch';
 	import FormField from '@smui/form-field';
 	import { activeAreas, user, userGroups } from '$lib/utils/store';
+	import { goto } from '$app/navigation';
 
 	let disabled: boolean = $state(false);
 	let updates: boolean = $state(true);
@@ -76,63 +77,7 @@
 
 <div class="settings">
 	<LayoutGrid>
-		<Cell span={8}>
-			<Card>
-				<CardContent>
-					<h4>Settings</h4>
-					<p>
-						Select the areas where you are affected by stroke on the human area selector, and we can
-						use this information to carefully select specific exercises to help target problematic
-						areas, to help you regain in every way.
-					</p>
-					<p>
-						Once you have selected all the areas affected by your Stroke, Save the settings, and you
-						are finished, you will then be forwarded to the exercises area.
-					</p>
-					<h4>You can come back</h4>
-					<p>
-						Please be aware that you can come back into these settings and adjust your problem areas
-						to recieve different exercises at any time, but picking them properly from the start of
-						your 3 month rehabilitation provides more effective results for you, and more reliable
-						research results, for us.
-					</p>
-					<h4>Legend</h4>
-					<p>
-						Use the following legend to assign areas, <span class="off">BLUE</span> is unaffected,
-						<span class="on">ORANGE</span> is affected.
-					</p>
-					<h4>Notifications</h4>
-					<div>
-						<FormField>
-							<Switch bind:checked={updates} />
-							{#snippet label()}
-								RECEIVE EMAIL NOTIFICATIONS FROM FASTLAB
-							{/snippet}
-						</FormField>
-					</div>
-					<div>
-						<FormField>
-							<Switch bind:checked={chat} />
-							{#snippet label()}
-								ALLOW HELP CHAT
-							{/snippet}
-						</FormField>
-					</div>
-					<h4>OPT OUT</h4>
-					<div>
-						<p>
-							If you feel like you do not want to be a part of this research anymore, you can click
-							this button, and we will permanently delete all of your data. This will permanently
-							delete all record of your participation with Regain, and log you out.
-						</p>
-						<Button class="error-button" variant="raised" onclick={() => (open = !open)}
-							>PERMANENTLY REMOVE ALL OF MY DATA</Button
-						>
-					</div>
-				</CardContent>
-			</Card>
-		</Cell>
-		<Cell span={4}>
+				<Cell span={4}>
 			<Card>
 				<CardContent>
 					<h4>Area Selector</h4>
@@ -260,6 +205,11 @@
 						</div>
 					</div>
 					<div class="legend">
+						<p>When you are happy with your selections, continue to the exercises, you must pick at least one area to continue. We will give you exercises based on your selection.</p>
+						<Button type="submit" {disabled} variant="raised" onclick={() => goto('/exercises')}>Show me my exercises</Button>
+					</div>
+					<!--
+					<div class="legend">
 						<form class="form" method="POST" action="?/saveSettings" use:enhance={onSubmit}>
 							<input type="hidden" name="email" value={user.current.email} />
 							<input type="hidden" name="head" value={activeAreas.current[0].status} />
@@ -269,8 +219,65 @@
 							<input type="hidden" name="stomach" value={activeAreas.current[4].status} />
 							<input type="hidden" name="legs" value={activeAreas.current[5].status} />
 							<input type="hidden" name="hands" value={activeAreas.current[6].status} />
-							<Button type="submit" {disabled} variant="raised">SAVE SETTINGS</Button>
+							<Button type="submit" {disabled} variant="raised">SAVE AREAS</Button>
 						</form>
+					</div>
+					-->
+				</CardContent>
+			</Card>
+		</Cell>
+		<Cell span={8}>
+			<Card>
+				<CardContent>
+					<h4>Settings</h4>
+					<p>
+						Select the areas where you are affected by stroke on the human area selector, and we can
+						use this information to carefully select specific exercises to help target problematic
+						areas, to help you regain in every way.
+					</p>
+					<p>
+						Once you have selected all the areas affected by your Stroke, Save the settings, and you
+						are finished, you will then be forwarded to the exercises area.
+					</p>
+					<h4>You can come back</h4>
+					<p>
+						Please be aware that you can come back into these settings and adjust your problem areas
+						to recieve different exercises at any time, but picking them properly from the start of
+						your 3 month rehabilitation provides more effective results for you, and more reliable
+						research results, for us.
+					</p>
+					<h4>Legend</h4>
+					<p>
+						Use the following legend to assign areas, <span class="off">BLUE</span> is unaffected,
+						<span class="on">ORANGE</span> is affected.
+					</p>
+					<h4>Notifications</h4>
+					<div>
+						<FormField>
+							<Switch bind:checked={updates} />
+							{#snippet label()}
+								RECEIVE EMAIL NOTIFICATIONS FROM FASTLAB
+							{/snippet}
+						</FormField>
+					</div>
+					<div>
+						<FormField>
+							<Switch bind:checked={chat} />
+							{#snippet label()}
+								ALLOW HELP CHAT
+							{/snippet}
+						</FormField>
+					</div>
+					<h4>OPT OUT</h4>
+					<div>
+						<p>
+							If you feel like you do not want to be a part of this research anymore, you can click
+							this button, and we will permanently delete all of your data. This will permanently
+							delete all record of your participation with Regain, and log you out.
+						</p>
+						<Button class="error-button" variant="raised" onclick={() => (open = !open)}
+							>PERMANENTLY REMOVE ALL OF MY DATA</Button
+						>
 					</div>
 				</CardContent>
 			</Card>

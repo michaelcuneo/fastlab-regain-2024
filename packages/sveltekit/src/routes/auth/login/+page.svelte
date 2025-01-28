@@ -6,7 +6,7 @@
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
 
-  let value: string | null = $state(null);
+	let value: string | null = $state(null);
 	let submitted: boolean = $state(false);
 	let disabled: boolean = $state(false);
 
@@ -17,7 +17,7 @@
 	$effect(() => {
 		disabled = !value;
 	});
-	
+
 	let { form }: { form: ActionData } = $props();
 </script>
 
@@ -46,8 +46,17 @@
 					<p>If you already have an account, use this same email, to get back in to Regain.</p>
 					<p>A login link will be sent each time to this email address.</p>
 					<p>Click on the link in the email, and you will be automatically logged in to Regain.</p>
-					<Textfield variant="outlined" id="email" type="email" input$name="email" bind:value label="email" />
-					<Button style="margin-top: 2rem;" type="submit" {disabled} variant="raised">SEND MAGIC LINK</Button>
+					<Textfield
+						variant="outlined"
+						id="email"
+						type="email"
+						input$name="email"
+						bind:value
+						label="email"
+					/>
+					<Button style="margin-top: 2rem;" type="submit" {disabled} variant="raised"
+						>SEND MAGIC LINK</Button
+					>
 				</form>
 			</Content>
 		</Card>

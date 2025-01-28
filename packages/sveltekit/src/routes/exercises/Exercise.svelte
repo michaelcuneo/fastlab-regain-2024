@@ -33,16 +33,16 @@
 								cancel();
 							};
 							return async ({ result }: { result: any }) => {
-								action = { success: result.status === 200, key: result.data.url }
+								if (result.data.url) {
+									action = { success: result.status === 200, key: result.data.url }
+								}
 							}
 						}}>
 						<input type="hidden" name="key" value={exercise.imageKey} />
-						{#if action.key !== ''}
+						{#if action.success === true}
 							<img src={action.key} alt="Video Thumbnail" loading="lazy" />
 						{:else}
-						<div class="loader">
-							<CircularProgress style="height: 32px; width: 32px;" indeterminate />
-						</div>
+							<div class="loader">{action.key}</div>
 						{/if}
 					</div>
 				</MediaContent>
@@ -83,8 +83,19 @@
 	}
 	.loader {
 		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 100%;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		animation: pulse 2s infinite;
+	}
+	@keyframes pulse {
+	  0%, 100% {
+    	background-color: hsl(0, 0%, 95%);
+  	}
+  	50% {
+	    background-color: hsl(0, 0%, 90%);
+	  }
 	}
 </style>

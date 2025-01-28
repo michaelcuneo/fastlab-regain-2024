@@ -1,6 +1,6 @@
 import type { Actions } from './$types';
 import { Api } from 'sst/node/api';
-import { randomUUID } from "crypto";
+import { randomUUID } from 'crypto';
 
 export const actions = {
 	async magicLinks({ request }: { request: Request }) {
@@ -33,7 +33,7 @@ export const actions = {
 						chatHelp: true,
 						onboard: false,
 						overallProgress: 0,
-						email: email,
+						email: email
 					})
 				});
 
@@ -46,19 +46,18 @@ export const actions = {
 			} else {
 				// Send a POST request to the magic link endpoint
 				const userAuthURL = `${Api.regainApi.url}/auth/magicLink/authorize?email=${email}`;
-				const magicLinkResponse = await fetch(
-					userAuthURL,
-					{
-						method: 'POST',
-						headers: { 'Content-Type': 'application/json' }
-					}
-				);
+				1;
+				const magicLinkResponse = await fetch(userAuthURL, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' }
+				});
+				console.log(magicLinkResponse);
 
 				if (!magicLinkResponse.ok) {
 					return {
 						success: false,
 						error: 'Failed to send magic link, this error has been logged with FASTlab.'
-					}
+					};
 				}
 			}
 		}
