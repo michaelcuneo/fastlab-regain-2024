@@ -13,19 +13,22 @@ import { Table } from "sst/node/table";
 const client = new DynamoDBClient();
 const documentClient = DynamoDBDocumentClient.from(client);
 
-export const listHandler: APIGatewayProxyHandlerV2 = async (event) => {
+export const fromEmailHandler: APIGatewayProxyHandlerV2 = async (event) => {
+  const email = event?.pathParameters?.id || "";
+
   try {
-    const command = new ScanCommand({
+    const command = new GetCommand({
       TableName: Table.Users.tableName,
+      Key: { email: email },
     });
 
-    const data = await documentClient.send(command);
+    const user = await documentClient.send(command);
 
     return {
       statusCode: 200,
-      body: data.Items
-        ? JSON.stringify(data.Items)
-        : JSON.stringify("Error: Users not listed"),
+      body: user.Item
+        ? JSON.stringify(user.Item)
+        : JSON.stringify("Error: User doesn't exist"),
     };
   } catch (err) {
     return {
@@ -62,31 +65,6 @@ export const createHandler: APIGatewayProxyHandlerV2 = async (
   }
 };
 
-export const fromEmailHandler: APIGatewayProxyHandlerV2 = async (event) => {
-  const email = event?.pathParameters?.id || "";
-
-  try {
-    const command = new GetCommand({
-      TableName: Table.Users.tableName,
-      Key: { email: email },
-    });
-
-    const user = await documentClient.send(command);
-
-    return {
-      statusCode: 200,
-      body: user.Item
-        ? JSON.stringify(user.Item)
-        : JSON.stringify("Error: User doesn't exist"),
-    };
-  } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify(err),
-    };
-  }
-};
-
 export const updateHandler: APIGatewayProxyHandlerV2 = async (
   event: APIGatewayProxyEventV2
 ) => {
@@ -105,18 +83,36 @@ export const updateHandler: APIGatewayProxyHandlerV2 = async (
     },
   };
 
-  console.log(params);
-
   try {
     const updateResult = await documentClient.send(new UpdateCommand(params));
-
-    console.log("Fucking Settings", updateResult);
 
     return {
       statusCode: 200,
       body: updateResult
         ? JSON.stringify(updateResult)
         : JSON.stringify("Error: User not updated"),
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify(err),
+    };
+  }
+};
+
+export const listHandler: APIGatewayProxyHandlerV2 = async (event) => {
+  try {
+    const command = new ScanCommand({
+      TableName: Table.Users.tableName,
+    });
+
+    const data = await documentClient.send(command);
+
+    return {
+      statusCode: 200,
+      body: data.Items
+        ? JSON.stringify(data.Items)
+        : JSON.stringify("Error: Users not listed"),
     };
   } catch (err) {
     return {
