@@ -81,6 +81,7 @@
 		{height}
 		controls={false}
 		loop
+		muted
 	>
 		<track kind="captions" />
 	</video>

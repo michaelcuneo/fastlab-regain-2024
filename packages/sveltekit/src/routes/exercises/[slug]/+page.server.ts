@@ -7,11 +7,6 @@ export const load: PageServerLoad = (async ({ params }) => {
 	const exerciseResponse = await fetch(exerciseUrl);
 	const exercise = await exerciseResponse.json();
 
-	const videoUrl = Api.regainApi.url + '/presignedurl/' + exercise.videoKey;
-	const videoResponse = await fetch(videoUrl);
-	const video = await videoResponse.json();
-	exercise.video = video.url;
-
 	return {
 		exercises: exercise
 	};
@@ -20,7 +15,7 @@ export const load: PageServerLoad = (async ({ params }) => {
 export const actions = {
 	async getKey({ request }: { request: Request }) {
 		const formData = await request.formData();
-		const key = formData.get('key')?.toString();
+		const key = formData.get('key')?.toString() || undefined;
 		const keyUrl = Api.regainApi.url + '/presignedurl/' + key;
 		const keyResponse = await fetch(keyUrl);
 

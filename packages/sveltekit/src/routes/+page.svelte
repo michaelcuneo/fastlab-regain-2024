@@ -4,11 +4,6 @@
 	import Button from '@smui/button';
 	import { goto } from '$app/navigation';
 	import Card, { Content } from '@smui/card';
-	import { groupExercises } from '$lib/utils/store';
-
-	$effect(() => {
-		groupExercises.current = data.groupExerciseData;
-	});
 
 	let { data }: { data: PageData } = $props();
 </script>

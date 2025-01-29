@@ -8,20 +8,10 @@
 	import { Cell } from '@smui/layout-grid';
 
 	let loaded: boolean = $state(false);
+	let notfound: boolean = $state(false);
 	let submitting: boolean = $state(false);
-	let form: HTMLFormElement;
+	let form: HTMLFormElement | undefined = $state();
 	let action: { success: boolean; key: string } = $state({ success: false, key: '' });
-
-	$effect(() => {
-		form.addEventListener(
-			'submit',
-			(e) => {
-				console.log('submitting form');
-				e.preventDefault();
-			},
-			{ once: true }
-		);
-	});
 
 	let { exercise }: { exercise: Exercise } = $props();
 </script>
@@ -32,11 +22,19 @@
 	method="POST"
 	action="?/getKey"
 	use:enhance={({ cancel }) => {
-		if (loaded || submitting) cancel();
+		if (loaded || submitting) {
+			cancel();
+			return;
+		};
+		submitting = true;
 		return async ({ result }: { result: any }) => {
 			submitting = false;
 			if (result.data.url) {
 				action = { success: result.status === 200, key: result.data.url };
+				const url = await fetch(action.key);
+				if (url.status === 404) {
+					notfound = true;
+				}
 				loaded = true;
 			}
 		};
@@ -57,11 +55,10 @@
 					<div
 						use:lazyLoad
 						onisVisible={() => {
-							if (loaded) return;
-							form.requestSubmit();
+							form?.requestSubmit();
 						}}
 					>
-						{#if action.success === true}
+						{#if action.success === true && notfound === false}
 							<img src={action.key} alt="Video Thumbnail" loading="lazy" />
 						{:else}
 							<div class="loader"></div>

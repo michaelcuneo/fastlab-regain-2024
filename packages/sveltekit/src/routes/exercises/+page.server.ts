@@ -15,10 +15,7 @@ export const load = (async () => {
 export const actions = {
 	async getKey({ request }: { request: Request }) {
 		const formData = await request.formData();
-		const key = formData.get('key')?.toString();
-		if (!key) {
-			return { error: 'No key provided' };
-		}
+		const key = formData.get('key')?.toString() || undefined;
 		const keyUrl = Api.regainApi.url + '/presignedurl/' + key;
 		const keyResponse = await fetch(keyUrl);
 
