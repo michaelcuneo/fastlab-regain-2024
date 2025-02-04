@@ -55,7 +55,13 @@
 		width,
 		height,
 		autoplay
-	}: { videoElement: HTMLVideoElement | undefined; src: string; width: string; height: string; autoplay: boolean } = $props();
+	}: {
+		videoElement: HTMLVideoElement | undefined;
+		src: string;
+		width: string;
+		height: string;
+		autoplay: boolean;
+	} = $props();
 </script>
 
 <div class="container">

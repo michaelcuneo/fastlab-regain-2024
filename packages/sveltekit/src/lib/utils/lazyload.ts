@@ -16,7 +16,7 @@ const getObserver = () => {
 
 export const lazyLoad = (element: HTMLElement) => {
   getObserver();
-    
+
   observer.observe(element);
 
   return {

@@ -6,12 +6,12 @@
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
-	
+
 	import { difficult, pain } from '$lib/utils/store';
 	import { lazyLoad } from '$lib/utils/lazyload';
 	import { calculateRealTime } from '$lib/utils/calculateRealTime';
 	import Video from '$lib/components/Video.svelte';
-	
+
 	import Messages from './Messages.svelte';
 	import Controls from './Controls.svelte';
 	import Guage from './Guage.svelte';
@@ -35,7 +35,7 @@
 		if (loaded || submitting) {
 			cancel();
 			return;
-		};
+		}
 		submitting = true;
 		return async ({ result }: { result: any }) => {
 			submitting = false;
@@ -68,7 +68,6 @@
 					<div class="loader"></div>
 				{/if}
 			</div>
-
 		</Cell>
 		<Cell span={4}>
 			<Card style="border-radius: 16px;">

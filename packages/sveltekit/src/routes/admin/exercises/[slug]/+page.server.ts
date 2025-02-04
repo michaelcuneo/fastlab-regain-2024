@@ -25,5 +25,5 @@ export const actions = {
     const keyResponse = await fetch(keyUrl);
 
     return keyResponse.json();
-	}
+  }
 } satisfies Actions;
