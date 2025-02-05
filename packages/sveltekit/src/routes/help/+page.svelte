@@ -1,22 +1,20 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-  import LayoutGrid, { Cell } from '@smui/layout-grid';
-  import Card, { Content } from '@smui/card';
-  import Paper, { Title, Subtitle } from '@smui/paper';
-  import Textfield from '@smui/textfield';
-  import IconButton from '@smui/icon-button';
-  import Button from '@smui/button';
+	import LayoutGrid, { Cell } from '@smui/layout-grid';
+	import Card, { Content } from '@smui/card';
+	import Paper, { Title, Subtitle } from '@smui/paper';
+	import Textfield from '@smui/textfield';
+	import IconButton from '@smui/icon-button';
+	import Button from '@smui/button';
 
 	let author: string;
-  let newMessage: string;
-  let updatingId: string | null = null;
-  let helpMessages: string[] = [];
+	let newMessage: string;
+	let updatingId: string | null = null;
+	let helpMessages: string[] = [];
 
-	onMount(() => {
-	});
+	onMount(() => {});
 
-	onDestroy(() => {
-	});
+	onDestroy(() => {});
 
 	const handleSubmit = async (e: any) => {
 		e.key === 'Enter' && newMessage !== null && submitMessage();
@@ -27,18 +25,14 @@
 	};
 
 	// Add the message.
-	const submitMessage = async () => {
-	};
+	const submitMessage = async () => {};
 
-  // Update the message.
-  const updateMessage = async (message: string) => {
-  };
+	// Update the message.
+	const updateMessage = async (message: string) => {};
 
-	const deleteMessage = async (id: string) => {
-	};
+	const deleteMessage = async (id: string) => {};
 
-	const handleReset = () => {
-	};
+	const handleReset = () => {};
 
 	const handleUpdating = (id: string) => {
 		if (updatingId === null) {
@@ -48,95 +42,94 @@
 		}
 	};
 
-	onMount(() => {
-	});
+	onMount(() => {});
 </script>
 
 <div class="wrapper">
-<LayoutGrid>
-	<Cell span={4}>
-		<Card>
-			<Paper>
-				<Title>Direct message to developer</Title>
-				<Subtitle>EMERGENCY ONLY</Subtitle>
-				<Button variant="raised" onclick={handleReset}>RESET APP</Button>
-			</Paper>
-		</Card>
-	</Cell>
-	<Cell span={8}>
-		<Card>
-			<Content>
-				<div class="message-scroller">
-					{#each helpMessages as message}
-						<div class="message">
-							<div class="header">
-								<div class="staff">
-									{#if message.user}
-										{message.user.username}
-									{:else}
-										GUEST
-									{/if}
-                </div>
-								<div class="time">
-									{new Date(message.createdAt).toUTCString()}
-                </div>
+	<LayoutGrid>
+		<Cell span={4}>
+			<Card>
+				<Paper>
+					<Title>Direct message to developer</Title>
+					<Subtitle>EMERGENCY ONLY</Subtitle>
+					<Button variant="raised" onclick={handleReset}>RESET APP</Button>
+				</Paper>
+			</Card>
+		</Cell>
+		<Cell span={8}>
+			<Card>
+				<Content>
+					<div class="message-scroller">
+						{#each helpMessages as message}
+							<div class="message">
+								<div class="header">
+									<div class="staff">
+										{#if message.user}
+											{message.user.username}
+										{:else}
+											GUEST
+										{/if}
+									</div>
+									<div class="time">
+										{new Date(message.createdAt).toUTCString()}
+									</div>
+								</div>
+								<div class="message-content">
+									<div class="message-text">
+										{#if updatingId == message.id}
+											<Textfield
+												style="width: 100%;"
+												variant="outlined"
+												bind:value={message.content}
+												onkeydown={(e) => handleEdit(e, message)}
+											/>
+										{:else}
+											{message.content}
+										{/if}
+									</div>
+									<div class="message-button">
+										<IconButton
+											style="color: green;"
+											class="material-icons"
+											onclick={() => handleUpdating(message.id)}>edit</IconButton
+										>
+										<IconButton
+											style="color: red;"
+											class="material-icons"
+											onclick={() => deleteMessage(message.id)}>delete</IconButton
+										>
+									</div>
+								</div>
 							</div>
-							<div class="message-content">
-								<div class="message-text">
-									{#if updatingId == message.id}
-										<Textfield
-											style="width: 100%;"
-											variant="outlined"
-											bind:value={message.content}
-											onkeydown={(e) => handleEdit(e, message)}
-										/>
-									{:else}
-										{message.content}
-									{/if}
-                </div>
-								<div class="message-button">
-									<IconButton
-										style="color: green;"
-										class="material-icons"
-										onclick={() => handleUpdating(message.id)}>edit</IconButton
-									>
-									<IconButton
-										style="color: red;"
-										class="material-icons"
-										onclick={() => deleteMessage(message.id)}>delete</IconButton
-									>
-                </div>
-							</div>
-						</div>
-					{/each}
-        </div>
-				<div class="message-entry">
-					<Textfield
-						style="padding-right: 0.2em; width: 100%;"
-						variant="outlined"
-						bind:value={newMessage}
-						onkeydown={(e) => handleSubmit(e)}
-					/>
-					<Button variant="raised" onclick={() => newMessage !== null && submitMessage()}
-						>send</Button
-					>
-          </div>
-			</Content>
-		</Card>
-	</Cell>
-</LayoutGrid>
+						{/each}
+					</div>
+					<div class="message-entry">
+						<Textfield
+							style="padding-right: 0.2em; width: 100%;"
+							variant="outlined"
+							bind:value={newMessage}
+							onkeydown={(e) => handleSubmit(e)}
+						/>
+						<Button variant="raised" onclick={() => newMessage !== null && submitMessage()}
+							>send</Button
+						>
+					</div>
+				</Content>
+			</Card>
+		</Cell>
+	</LayoutGrid>
 </div>
 
 <style>
-  .wrapper {
-    display: flex;
+	.wrapper {
+		display: flex;
 		position: relative;
 		flex-direction: column;
 		width: 100%;
 		height: 100%;
 		background: rgba(255, 255, 255, 0.1);
 		z-index: 0;
-  }
+	}
 	.message-scroller {
 		display: flex;
 		flex-direction: column-reverse;
