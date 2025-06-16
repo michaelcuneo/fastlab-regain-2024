@@ -78,7 +78,7 @@
 				</Button>
 			{/if}
 			{#if currentMode.current === 'add' || currentMode.current === 'display'}
-				<Button onclick={() => goto('/admin')} variant="raised">CANCEL</Button>
+				<Button onclick={() => goto('/admin/groups')} variant="raised">CANCEL</Button>
 			{/if}
 		</div>
 	</header-panel>

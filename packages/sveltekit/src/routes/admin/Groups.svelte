@@ -1,21 +1,18 @@
 <script>
 	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import Button from '@smui/button';
-	import ExerciseLink from './ExerciseLink.svelte';
+	import { goto } from '$app/navigation';
+	import GroupLink from './GroupLink.svelte';
 
-	import { exercises, currentExercise, currentMode, user } from '$lib/utils/store';
+	import { groups, currentGroup, currentMode, user } from '$lib/utils/store';
 
 	onMount(async () => {
-		currentExercise.current = {
+		currentGroup.current = {
 			id: '',
-			title: '',
-			description: '',
-			imageKey: '',
-			videoKey: '',
-			time: 0,
-			video: '',
+			area: '',
+			users: [],
+			exercises: [],
 			createdAt: '',
 			updatedAt: ''
 		};
@@ -24,46 +21,45 @@
 </script>
 
 <svelte:head>
-	<title>Exercises</title>
+	<title>Groups</title>
 </svelte:head>
 
 {#if user.current}
-	<div class="header-panel">
+	<header-panel>
 		<div></div>
 		<div>
 			<Button
 				variant="raised"
 				onclick={() => {
 					currentMode.current = 'add';
-					goto('/admin/exercises/+');
+					goto('/admin/groups/+');
 				}}
 			>
-				ADD EXERCISE
+				ADD GROUP
 			</Button>
 		</div>
-	</div>
+	</header-panel>
 {/if}
 
-<div class="posts-panel">
-	{#if exercises.current}
+<posts-panel>
+	{#if groups.current}
 		<LayoutGrid>
-			{#each exercises.current as exercise}
+			{#each groups.current as group}
 				<Cell spanDevices={{ phone: 12, tablet: 4, desktop: 3 }}>
-					<ExerciseLink {exercise} />
+					<GroupLink {group} />
 				</Cell>
 			{/each}
 		</LayoutGrid>
 	{/if}
-</div>
+</posts-panel>
 
 <style>
-	.posts-panel {
+	posts-panel {
 		display: flex;
 		position: relative;
 		height: 100%;
-		width: 100vw;
 	}
-	.header-panel {
+	header-panel {
 		display: flex;
 		position: relative;
 		flex-direction: row;

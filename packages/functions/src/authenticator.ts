@@ -68,7 +68,7 @@ export const handler = AuthHandler({
           headers: {
             Location: process.env.IS_LOCAL
               ? `http://localhost:3000/auth/callback?token=${token}`
-              : `https://fastlab.soci.org.au/auth/callback?token=${token}`,
+              : `https://regain.michaelcuneo.com.au/auth/callback?token=${token}`,
           },
           body: JSON.stringify({
             type: "user",

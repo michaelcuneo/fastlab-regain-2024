@@ -38,8 +38,8 @@ export function WebsiteStack({ stack }: StackContext) {
       API_URL: api.url,
     },
     customDomain: {
-      domainName: "regain.soci.org.au",
-      hostedZone: "soci.org.au",
+      domainName: "regain.michaelcuneo.com.au",
+      hostedZone: "michaelcuneo.com.au",
     },
   });
 

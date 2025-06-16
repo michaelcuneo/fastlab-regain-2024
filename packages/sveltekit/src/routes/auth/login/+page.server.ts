@@ -46,12 +46,10 @@ export const actions = {
 			} else {
 				// Send a POST request to the magic link endpoint
 				const userAuthURL = `${Api.regainApi.url}/auth/magicLink/authorize?email=${email}`;
-				1;
 				const magicLinkResponse = await fetch(userAuthURL, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' }
 				});
-				console.log(magicLinkResponse);
 
 				if (!magicLinkResponse.ok) {
 					return {

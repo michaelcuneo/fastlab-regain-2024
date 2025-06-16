@@ -25,7 +25,7 @@
 		if (loaded || submitting) {
 			cancel();
 			return;
-		};
+		}
 		submitting = true;
 		return async ({ result }: { result: any }) => {
 			submitting = false;
