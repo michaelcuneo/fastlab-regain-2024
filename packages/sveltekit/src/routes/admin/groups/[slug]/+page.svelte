@@ -26,7 +26,7 @@
 		open = true;
 		if (currentMode.current === 'edit') {
 			open = false;
-			goto('/groups');
+			goto('/admin');
 
 			/*
 			editGroup({
@@ -36,7 +36,7 @@
       */
 		} else if (currentMode.current === 'add') {
 			open = false;
-			goto('/groups');
+			goto('/admin');
 
 			/*
 			addGroup({
@@ -53,7 +53,7 @@
 </script>
 
 <svelte:head>
-	{#if currentMode.current === 'display' || 'edit'}
+	{#if currentMode.current === 'display' || currentMode.current === 'edit'}
 		<title>{currentGroup.current.area}</title>
 	{/if}
 	{#if currentMode.current === 'add'}

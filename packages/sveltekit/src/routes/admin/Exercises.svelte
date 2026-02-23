@@ -20,6 +20,9 @@
 			updatedAt: ''
 		};
 		currentMode.current = 'display';
+
+		const res = await fetch('http://127.0.0.1:3001/exercise/list');
+		exercises.current = await res.json();
 	});
 </script>
 
@@ -35,7 +38,7 @@
 				variant="raised"
 				onclick={() => {
 					currentMode.current = 'add';
-					goto('/admin/exercises/+');
+					goto('/admin/exercises/new');
 				}}
 			>
 				ADD EXERCISE

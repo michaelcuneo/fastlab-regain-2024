@@ -17,6 +17,9 @@
 			updatedAt: ''
 		};
 		currentMode.current = 'display';
+
+		const res = await fetch('http://127.0.0.1:3001/group/list');
+		groups.current = await res.json();
 	});
 </script>
 
@@ -32,7 +35,7 @@
 				variant="raised"
 				onclick={() => {
 					currentMode.current = 'add';
-					goto('/admin/groups/+');
+					goto('/admin/groups/new');
 				}}
 			>
 				ADD GROUP
